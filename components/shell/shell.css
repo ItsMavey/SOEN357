@@ -44,7 +44,8 @@
 .shell__sidebar,
 .shell__rail-right {
     display: grid;
-    gap: 1rem;
+    gap: 2rem;
+    align-content: start;
 }
 
 .shell__rail-left {

@@ -1,6 +1,7 @@
 .rail-link {
     display: grid;
     gap: 1rem;
+    align-content: start;
     height: 180px;
     padding: 2rem;
     border-radius: 1rem;
@@ -40,7 +41,6 @@
 }
 
 .rail-link span {
-    align-self: end;
     font-size: 5rem;
     line-height: 1;
     color: var(--accent);
