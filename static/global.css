@@ -1,0 +1,161 @@
+:root,
+[data-theme="dawn"] {
+    --bg: #f6f1e7;
+    --panel: #fffaf0;
+    --panel-strong: #ffffff;
+    --line: #8fa6c3;
+    --line-strong: #5d7ea8;
+    --text: #29445f;
+    --text-strong: #17314a;
+    --text-soft: #5d768f;
+    --accent: #3a6bff;
+    --accent-soft: #e4ecff;
+    --shadow: rgba(37, 62, 92, 0.14);
+    --text-shadow: 0 2px 0 rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="sand"] {
+    --bg: #f4e6ca;
+    --panel: #fff9ee;
+    --panel-strong: #fffdf8;
+    --line: #d2ad66;
+    --line-strong: #b28034;
+    --text: #5b4020;
+    --text-strong: #37210d;
+    --text-soft: #846441;
+    --accent: #c57a2d;
+    --accent-soft: #ffe2bf;
+    --shadow: rgba(111, 72, 24, 0.14);
+    --text-shadow: 0 2px 0 rgba(255, 249, 238, 0.7);
+}
+
+[data-theme="night"] {
+    --bg: #121c2b;
+    --panel: #162336;
+    --panel-strong: #1a2a40;
+    --line: #37506f;
+    --line-strong: #8cb4ff;
+    --text: #d6e7ff;
+    --text-strong: #eff6ff;
+    --text-soft: #96afcf;
+    --accent: #7db4ff;
+    --accent-soft: #213e67;
+    --shadow: rgba(0, 0, 0, 0.28);
+    --text-shadow: 0 2px 0 rgba(6, 11, 19, 0.45);
+}
+
+:root,
+[data-font-size="medium"] {
+    --base-font-size: 16px;
+}
+
+[data-font-size="small"] {
+    --base-font-size: 14px;
+}
+
+[data-font-size="large"] {
+    --base-font-size: 18px;
+}
+
+[data-font-size="extra-large"] {
+    --base-font-size: 22px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: var(--base-font-size);
+}
+
+a,
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+a,
+button {
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    text-decoration: none;
+}
+
+/* Page-specific complex layouts that aren't full components yet */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--text-strong);
+    font-weight: 700;
+}
+
+.toggle-row input[type="checkbox"] {
+    width: 28px;
+    height: 28px;
+    accent-color: var(--accent);
+}
+
+.availability-table {
+    display: grid;
+    grid-template-columns: 130px repeat(7, minmax(44px, 1fr));
+    border: 1px solid var(--line);
+    border-radius: 1.2rem;
+    overflow: hidden;
+}
+
+.table-head,
+.table-label,
+.table-cell {
+    min-height: 58px;
+    display: grid;
+    place-items: center;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--panel-strong);
+}
+
+.table-head,
+.table-label {
+    color: var(--text-strong);
+    font-weight: 800;
+    text-shadow: var(--text-shadow);
+}
+
+.table-cell input {
+    display: none;
+}
+
+.table-cell span {
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--line);
+    border-radius: 0.45rem;
+    background: var(--panel);
+}
+
+.table-cell input:checked + span {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.availability-table > *:nth-last-child(-n + 8) {
+    border-bottom: 0;
+}
+
+.availability-table > *:nth-child(8n) {
+    border-right: 0;
+}

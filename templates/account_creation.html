@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account creation" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="page" %}
+    {% fill "rail_left" %}
+        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Skip for now" title="Setup later" tone="secondary" / %}
+        {% component "rail_link" url="{% url 'login' %}" eyebrow="Account" title="Login" / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="panel" flow="spacious" %}
+                {% component "heading" title="Create your account" support="Choose a role first, then add the details needed for your profile." level=1 / %}
+
+                {% component "grid" variant="roles" %}
+                    {% component "choice_card" title="I want to shovel" support="Worker" selected=True type="button" role="worker" ui="role-choice" / %}
+                    {% component "choice_card" title="I want my property's snow cleared" support="Client" type="button" role="client" ui="role-choice" / %}
+                {% endcomponent %}
+
+                <form class="stack" style="--stack-gap: 1rem;">
+                    {% component "text_field" label="Username" placeholder="Choose a username" / %}
+                    {% component "text_field" label="Email" type="email" placeholder="example@mail.com" / %}
+                    {% component "text_field" label="Phone (optional)" type="tel" placeholder="1 514 123 4567" / %}
+                    {% component "text_field" label="Password" type="password" placeholder="8-20 characters" / %}
+                    {% component "text_field" label="Repeat password" type="password" placeholder="Repeat above" / %}
+                </form>
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+
+    {% fill "rail_right" %}
+        {% component "rail_link" url="{% url 'worker_registration' %}" eyebrow="Next page" title="Continue to worker setup" tone="primary" arrow=True stretch=True id="accountNextLink" / %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    const roleButtons = document.querySelectorAll('[data-ui="role-choice"][data-role]');
+    const nextLink = document.getElementById('accountNextLink');
+    const nextLabel = document.getElementById('accountNextLabel');
+
+    function syncAccountRole(role) {
+        roleButtons.forEach((button) => {
+            button.toggleAttribute('data-state', button.dataset.role === role);
+        });
+
+        if (role === 'client') {
+            nextLink.href = "{% url 'property_form' %}";
+            nextLabel.textContent = "{% trans 'Continue to property form' %}";
+            return;
+        }
+
+        nextLink.href = "{% url 'worker_registration' %}";
+        nextLabel.textContent = "{% trans 'Continue to worker setup' %}";
+    }
+
+    roleButtons.forEach((button) => {
+        button.addEventListener('click', () => syncAccountRole(button.dataset.role));
+    });
+</script>
+{% endblock %}

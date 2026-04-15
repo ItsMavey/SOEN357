@@ -1,0 +1,15 @@
+.form-group {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.form-group__title {
+    font-size: 1.15rem;
+    color: var(--text-strong);
+    margin-bottom: 0.25rem;
+}
+
+.form-group__content {
+    display: grid;
+    gap: 1rem;
+}

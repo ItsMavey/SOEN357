@@ -1,0 +1,19 @@
+.surface {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: 0 18px 40px var(--shadow);
+    border-radius: 1.5rem;
+}
+
+.surface--hero {
+    padding: 1.5rem;
+}
+
+.surface--panel {
+    padding: 1.35rem;
+}
+
+.surface--spacious {
+    gap: 1.2rem;
+    display: grid;
+}

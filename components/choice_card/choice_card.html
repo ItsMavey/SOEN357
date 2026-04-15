@@ -1,0 +1,19 @@
+{% if href %}
+<a href="{{ href }}" class="choice-card{% if tone %} choice-card--{{ tone }}{% endif %}{% if selected %} choice-card--selected{% endif %}" 
+   data-ui="choice" {% for key, val in attrs.items %}{{ key }}="{{ val }}" {% endfor %}>
+    {% slot "default" %}
+        <span class="choice-card__title">{{ title }}</span>
+        {% if support %}<span class="choice-card__support">{{ support }}</span>{% endif %}
+    {% endslot %}
+</a>
+{% else %}
+<button type="{{ type }}" name="{{ name }}" value="{{ value }}" 
+        class="choice-card{% if tone %} choice-card--{{ tone }}{% endif %}{% if selected %} choice-card--selected{% endif %}" 
+        data-ui="choice" {% if selected %}data-state="selected"{% endif %}
+        {% for key, val in attrs.items %}{{ key }}="{{ val }}" {% endfor %}>
+    {% slot "default" %}
+        <span class="choice-card__title">{{ title }}</span>
+        {% if support %}<span class="choice-card__support">{{ support }}</span>{% endif %}
+    {% endslot %}
+</button>
+{% endif %}

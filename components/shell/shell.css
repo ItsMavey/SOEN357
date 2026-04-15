@@ -1,0 +1,65 @@
+.shell {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 4rem 2vw;
+}
+
+.shell--page {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) 180px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.shell--page.shell--intro {
+    align-items: stretch;
+}
+
+.shell--page .shell__rail-left { grid-column: 1; }
+.shell--page .shell__main { grid-column: 2; }
+.shell--page .shell__rail-right { grid-column: 3; }
+
+.shell--page.shell--wide {
+    grid-template-columns: minmax(0, 1fr) 160px;
+}
+.shell--page.shell--wide .shell__main { grid-column: 1; }
+.shell--page.shell--wide .shell__rail-right { grid-column: 2; }
+
+.shell--content {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 2rem;
+}
+.shell--content .shell__sidebar { grid-column: 1; }
+.shell--content .shell__main { grid-column: 2; }
+
+.shell--centered {
+    display: grid;
+    place-items: center;
+    min-height: calc(100vh - 220px);
+}
+
+/* Slot containers */
+.shell__rail-left,
+.shell__sidebar,
+.shell__rail-right {
+    display: grid;
+    gap: 1rem;
+}
+
+.shell__rail-left {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+}
+
+
+.shell__main {
+    display: grid;
+    gap: 2rem;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 12px 60px var(--shadow);
+}

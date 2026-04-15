@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{{ posting.title }} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="content" %}
+    {% fill "sidebar" %}
+        {% component "button_tile" label="Back to postings" href="{% url 'postings' %}" / %}
+        {% component "button_tile" label="View account" href="{% url 'account_detail' posting.account.slug %}" / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "surface" kind="panel" %}
+            {% component "heading" eyebrow=posting.kind title=posting.title support=posting.summary level=1 / %}
+
+            {% component "fact_grid" variant="detail" %}
+                <div>
+                    <dt>{% trans "Budget" %}</dt>
+                    <dd>{{ posting.budget }}</dd>
+                </div>
+                <div>
+                    <dt>{% trans "When" %}</dt>
+                    <dd>{{ posting.window }}</dd>
+                </div>
+                <div>
+                    <dt>{% trans "Area" %}</dt>
+                    <dd>{{ posting.location }}</dd>
+                </div>
+                <div>
+                    <dt>{% trans "Posted by" %}</dt>
+                    <dd><a href="{% url 'account_detail' posting.account.slug %}" style="color: var(--accent); font-weight: 800; text-decoration: underline;">{{ posting.account.name }}</a></dd>
+                </div>
+            {% endcomponent %}
+
+            {% component "stack" gap="1.5rem" %}
+                <div>
+                    {% component "heading" title="Details" compact=True / %}
+                    <p>{{ posting.details }}</p>
+                </div>
+
+                <div>
+                    {% component "heading" title="Areas included" compact=True / %}
+                    {% component "tag_list" tags=posting.areas / %}
+                </div>
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

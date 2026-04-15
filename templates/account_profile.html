@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{{ account.name }} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="content" %}
+    {% fill "sidebar" %}
+        {% component "button_tile" label="Back to postings" href="{% url 'postings' %}" / %}
+        {% component "button_tile" label="Profile & settings" href="{% url 'profile_settings' %}" / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="panel" %}
+                {% component "heading" eyebrow=account.role title=account.name support=account.badge|add:" · "|add:account.area level=1 / %}
+                <p>{{ account.summary }}</p>
+            {% endcomponent %}
+
+            {% component "surface" kind="panel" %}
+                {% component "heading" title="Active postings" support="Current jobs or availability shared from this account." / %}
+
+                {% component "grid" variant="postings" %}
+                    {% for posting in account_postings %}
+                        {% component "posting_card" posting=posting / %}
+                    {% endfor %}
+                {% endcomponent %}
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

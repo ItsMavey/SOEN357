@@ -1,22 +1,32 @@
-"""
-URL configuration for soen357 project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+
+from Snow.views import (
+    AccountDetailView,
+    HomeView,
+    LanguagesView,
+    LoginView,
+    PostingDetailView,
+    PostingsView,
+    ProfileSettingsView,
+    PropertyFormView,
+    SignupView,
+    ThemesView,
+    WorkerRegistrationView,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("", HomeView.as_view(), name="home"),
+    path("login/", LoginView.as_view(), name="login"),
+    path("signup/", SignupView.as_view(), name="signup"),
+    path("worker-registration/", WorkerRegistrationView.as_view(), name="worker_registration"),
+    path("property-form/", PropertyFormView.as_view(), name="property_form"),
+    path("postings/", PostingsView.as_view(), name="postings"),
+    path("postings/<slug:slug>/", PostingDetailView.as_view(), name="posting_detail"),
+    path("accounts/<slug:slug>/", AccountDetailView.as_view(), name="account_detail"),
+    path("profile-settings/", ProfileSettingsView.as_view(), name="profile_settings"),
+    path("themes/", ThemesView.as_view(), name="themes"),
+    path("languages/", LanguagesView.as_view(), name="languages"),
+    path("admin/", admin.site.urls),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]

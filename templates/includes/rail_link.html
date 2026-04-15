@@ -1,0 +1,11 @@
+<a
+    href="{{ url }}"
+    data-ui="rail-link"
+    {% if tone %}data-tone="{{ tone }}"{% endif %}
+    {% if stretch %}data-stretch="true"{% endif %}
+>
+    {% if eyebrow %}<span data-ui="eyebrow">{{ eyebrow }}</span>{% endif %}
+    <strong>{{ title }}</strong>
+    {% if body %}<span data-ui="support">{{ body }}</span>{% endif %}
+    {% if arrow %}<span data-ui="arrow" aria-hidden="true">›</span>{% endif %}
+</a>

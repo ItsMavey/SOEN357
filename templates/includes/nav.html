@@ -1,0 +1,10 @@
+{% load i18n %}
+<header data-nav aria-label="{% trans 'Application header' %}">
+    <div data-nav-mark aria-hidden="true">✦</div>
+    <div data-nav-copy>
+        <a href="{% url 'home' %}" data-nav-title>{{ nav_brand|default:"Bing Chilling" }}</a>
+        <p data-nav-subtitle>
+            {{ nav_page_title|default:_("Neighbours shovelling services") }}
+        </p>
+    </div>
+</header>

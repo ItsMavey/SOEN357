@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "New property form" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="page" variant="wide" %}
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="panel" flow="spacious" %}
+                {% component "heading" title="Create a new snow clearing post" support="Describe the property, timing, and any extra requirements for the worker." level=1 / %}
+
+                {% component "grid" variant="property" %}
+                    {% component "stack" %}
+                        {% component "form_group" title="Areas to clear" %}
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Entrance" %}</span></label>
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Stairs" %}</span></label>
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Garage" %}</span></label>
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Other" %}</span></label>
+                            {% component "text_field" label="" placeholder="Walkway, side path, shed access..." / %}
+                        {% endcomponent %}
+
+                        {% component "form_group" title="Time to start clearing" %}
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "When snow stops" %}</span></label>
+                            {% component "text_field" label="Other start time" type="datetime-local" / %}
+                        {% endcomponent %}
+
+                        {% component "form_group" title="Time before all snow should be cleared (optional)" %}
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Tomorrow" %}</span></label>
+                            {% component "text_field" label="Other deadline" type="datetime-local" / %}
+                        {% endcomponent %}
+
+                        {% component "form_group" title="Extra services / requirements (optional)" %}
+                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Spread salt or sand (must be provided on place)" %}</span></label>
+                            {% component "text_field" label="Other request" placeholder="Shovel around bins, clear path to car, etc." / %}
+                        {% endcomponent %}
+                    {% endcomponent %}
+
+                    {% component "stack" %}
+                        {% component "grid" variant="double" %}
+                            {% component "text_field" label="Pay" type="number" placeholder="40" / %}
+                            {% component "text_field" label="Address" placeholder="456 Snowbank Avenue" / %}
+                        {% endcomponent %}
+
+                        {% component "form_group" title="Upload a picture of your property" %}
+                            {% component "upload_field" label="Choose a file" / %}
+                        {% endcomponent %}
+
+                        {% component "form_group" title="Upload a picture of where to stash snow (optional)" %}
+                            {% component "upload_field" label="Choose a file" / %}
+                        {% endcomponent %}
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    {% component "button" label="Save for future posts" href="{% url 'postings' %}" tone="ghost" / %}
+                    {% component "button" label="Post" href="{% url 'postings' %}" / %}
+                </div>
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+
+    {% fill "rail_right" %}
+        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Cancel" title="Go to content" tone="secondary" / %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

@@ -1,0 +1,7 @@
+<a href="{{ url }}" class="rail-link{% if tone %} rail-link--{{ tone }}{% endif %}{% if stretch %} is-stretched{% endif %}">
+   {% for key, val in attrs.items %}{{ key }}="{{ val }}" {% endfor %}>
+    {% if eyebrow %}<small>{{ eyebrow }}</small>{% endif %}
+    <strong>{{ title }}</strong>
+    {% if body %}<p>{{ body }}</p>{% endif %}
+    {% if arrow %}<span aria-hidden="true">›</span>{% endif %}
+</a>

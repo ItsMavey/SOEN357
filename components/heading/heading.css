@@ -1,0 +1,34 @@
+.heading {
+    margin-bottom: 1rem;
+}
+
+.heading--compact {
+    margin-bottom: 0.7rem;
+}
+
+.heading__eyebrow {
+    color: var(--accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.heading__title {
+    color: var(--text-strong);
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+    text-shadow: var(--text-shadow);
+}
+
+h1.heading__title {
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    line-height: 1.04;
+}
+
+.heading__support {
+    color: var(--text-soft);
+}

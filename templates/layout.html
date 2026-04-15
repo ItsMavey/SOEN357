@@ -1,0 +1,54 @@
+{% load static i18n component_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Snow.{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    {% component_css_dependencies %}
+    {% component_js_dependencies %}
+    <script>
+        const savedTheme = localStorage.getItem('app_theme') || 'dawn';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const savedFontSize = localStorage.getItem('app_fontsize') || 'medium';
+        document.documentElement.setAttribute('data-font-size', savedFontSize);
+        const savedAudioMode = localStorage.getItem('app_audio_mode') || 'off';
+        document.documentElement.setAttribute('data-audio-mode', savedAudioMode);
+    </script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div data-shell>
+        {% block header %}
+            {% component "nav" brand=nav_brand subtitle=nav_page_title / %}
+        {% endblock %}
+
+        <main id="main-content" data-main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        function changeTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('app_theme', themeName);
+        }
+
+        function changeFontSize(size) {
+            document.documentElement.setAttribute('data-font-size', size);
+            localStorage.setItem('app_fontsize', size);
+        }
+
+        function changeAudioMode(mode) {
+            document.documentElement.setAttribute('data-audio-mode', mode);
+            localStorage.setItem('app_audio_mode', mode);
+        }
+    </script>
+    {% block extra_body %}{% endblock %}
+</body>
+</html>

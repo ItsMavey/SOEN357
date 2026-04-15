@@ -1,0 +1,4 @@
+<button type="button" class="toggle-switch" {% if id %}id="{{ id }}"{% endif %} aria-pressed="false" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
+    <span class="toggle-switch__track"></span>
+    <span class="toggle-switch__label">{{ label_off }}</span>
+</button>

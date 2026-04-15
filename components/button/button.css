@@ -1,0 +1,26 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 64px;
+    padding: 1.25rem 2.5rem;
+    border-radius: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px var(--shadow);
+}
+
+.button--ghost {
+    background: var(--panel-strong);
+    border: 1px solid var(--line);
+    color: var(--text-strong);
+}

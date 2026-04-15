@@ -1,0 +1,5 @@
+<header class="heading{% if compact %} heading--compact{% endif %}">
+    {% if eyebrow %}<small class="heading__eyebrow">{{ eyebrow }}</small>{% endif %}
+    <h{{ level }} class="heading__title">{{ title }}</h{{ level }}>
+    {% if support %}<p class="heading__support">{{ support }}</p>{% endif %}
+</header>

@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Shoveller registration" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="page" %}
+    {% fill "rail_left" %}
+        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Skip for now" title="Setup later" tone="secondary" / %}
+        {% component "rail_link" url="{% url 'login' %}" eyebrow="Account" title="Login" / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="panel" flow="spacious" %}
+                {% component "heading" title="Worker service area" support="Set the travel rules and weekly availability you want clients to see." level=1 / %}
+
+                <div class="stack" style="--stack-gap: 1.2rem;">
+                    <label class="toggle-row">
+                        <input type="checkbox" checked>
+                        <span>{% trans "Near my address" %}</span>
+                    </label>
+                    {% component "grid" variant="double" %}
+                        {% component "text_field" label="Address" placeholder="123 Example Street" / %}
+                        {% component "text_field" label="Range (km)" type="number" placeholder="8" / %}
+                    {% endcomponent %}
+
+                    <label class="toggle-row">
+                        <input type="checkbox">
+                        <span>{% trans "Near public transport" %}</span>
+                    </label>
+                    {% component "text_field" label="Max commute time" placeholder="30 minutes" / %}
+                </div>
+
+                {% component "heading" title="Available hours (optional)" support="Mark when at least two hours of work would fit your schedule." compact=True / %}
+
+                <div class="availability-table" role="table" aria-label="{% trans 'Weekly availability' %}">
+                    <div class="table-head">{% trans "Time" %}</div>
+                    <div class="table-head">{% trans "Mon" %}</div>
+                    <div class="table-head">{% trans "Tue" %}</div>
+                    <div class="table-head">{% trans "Wed" %}</div>
+                    <div class="table-head">{% trans "Thu" %}</div>
+                    <div class="table-head">{% trans "Fri" %}</div>
+                    <div class="table-head">{% trans "Sat" %}</div>
+                    <div class="table-head">{% trans "Sun" %}</div>
+
+                    <div class="table-label">{% trans "Morning" %}</div>
+                    {% for _ in "1234567" %}
+                        <label class="table-cell"><input type="checkbox"><span></span></label>
+                    {% endfor %}
+
+                    <div class="table-label">{% trans "Afternoon" %}</div>
+                    {% for _ in "1234567" %}
+                        <label class="table-cell"><input type="checkbox"><span></span></label>
+                    {% endfor %}
+
+                    <div class="table-label">{% trans "Evening" %}</div>
+                    {% for _ in "1234567" %}
+                        <label class="table-cell"><input type="checkbox"><span></span></label>
+                    {% endfor %}
+
+                    <div class="table-label">{% trans "Night" %}</div>
+                    {% for _ in "1234567" %}
+                        <label class="table-cell"><input type="checkbox"><span></span></label>
+                    {% endfor %}
+                </div>
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+
+    {% fill "rail_right" %}
+        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Done" title="Go to content" tone="primary" arrow=True stretch=True / %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

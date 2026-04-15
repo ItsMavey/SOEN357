@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="centered" %}
+    {% fill "default" %}
+        {% component "surface" kind="panel" %}
+            {% component "heading" eyebrow=page_eyebrow title=page_title support=page_description level=1 / %}
+            {% component "button" label=primary_label href="{% url primary_url_name %}" / %}
+        {% endcomponent %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

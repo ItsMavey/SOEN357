@@ -1,0 +1,28 @@
+.text-field {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.text-field__label {
+    font-weight: 800;
+    color: var(--text-strong);
+    font-size: 0.95rem;
+}
+
+.text-field__input {
+    min-height: 56px;
+    padding: 0 1.2rem;
+    background: var(--panel-strong);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    color: var(--text-strong);
+    font-size: 1.1rem;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+    font-family: inherit;
+}
+
+.text-field__input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--shadow);
+}

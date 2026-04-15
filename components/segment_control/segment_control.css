@@ -1,0 +1,37 @@
+.segment-control {
+    display: inline-flex;
+    background: var(--panel-strong);
+    padding: 0.35rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+    gap: 0.25rem;
+}
+
+.segment-control button,
+.segment-control [data-ui="segment"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    border: none;
+    background: transparent;
+    color: var(--text-soft);
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 180ms ease, color 180ms ease;
+    font-family: inherit;
+}
+
+.segment-control button:hover,
+.segment-control [data-ui="segment"]:hover {
+    background: var(--panel);
+    color: var(--text-strong);
+}
+
+.segment-control button[aria-pressed="true"],
+.segment-control [data-ui="segment"][data-state="selected"] {
+    background: var(--accent);
+    color: #fff;
+}

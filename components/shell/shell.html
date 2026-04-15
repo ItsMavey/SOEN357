@@ -1,0 +1,25 @@
+<section class="shell shell--{{ layout }}{% if variant %} shell--{{ variant }}{% endif %}">
+    {% if has_rail_left %}
+    <aside class="shell__rail-left">
+        {% slot "rail_left" %}{% endslot %}
+    </aside>
+    {% endif %}
+
+    {% if has_sidebar %}
+    <aside class="shell__sidebar">
+        {% slot "sidebar" %}{% endslot %}
+    </aside>
+    {% endif %}
+
+    {% if has_default %}
+    <div class="shell__main">
+        {% slot "default" %}{% endslot %}
+    </div>
+    {% endif %}
+
+    {% if has_rail_right %}
+    <aside class="shell__rail-right">
+        {% slot "rail_right" %}{% endslot %}
+    </aside>
+    {% endif %}
+</section>

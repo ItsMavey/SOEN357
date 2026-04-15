@@ -1,0 +1,45 @@
+.grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.grid--languages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.grid--themes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.grid--roles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.grid--property {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.92fr);
+}
+
+.grid--double {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid--postings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid > .span-2 {
+    grid-column: span 2;
+}

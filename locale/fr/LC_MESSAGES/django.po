@@ -1,0 +1,811 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-14 15:07-0400\n"
+"PO-Revision-Date: 2026-04-14 14:50-0400\n"
+"Last-Translator: Codex <codex@example.com>\n"
+"Language-Team: fr\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Snow/views.py:7 Snow/views.py:18 templates/includes/nav.html:7
+msgid "Neighbours shovelling services"
+msgstr "Services de deneigement de voisins"
+
+#: Snow/views.py:23 Snow/views.py:26 templates/account_creation.html:15
+#: templates/home.html:15 templates/worker_registration.html:15
+msgid "Login"
+msgstr "Connexion"
+
+#: Snow/views.py:25 templates/account_creation.html:14 templates/home.html:14
+#: templates/worker_registration.html:14
+msgid "Account"
+msgstr "Compte"
+
+#: Snow/views.py:28
+msgid ""
+"Returning users will be able to access their dashboard, saved preferences, "
+"and active posts from here."
+msgstr ""
+"Les utilisateurs de retour pourront acceder a leur tableau de bord, a leurs "
+"preferences enregistrees et a leurs publications actives depuis ici."
+
+#: Snow/views.py:31
+msgid "Go to postings"
+msgstr "Aller aux publications"
+
+#: Snow/views.py:37 templates/account_creation.html:4
+msgid "Account creation"
+msgstr "Creation du compte"
+
+#: Snow/views.py:42 templates/worker_registration.html:4
+msgid "Shoveller registration"
+msgstr "Inscription du deneigeur"
+
+#: Snow/views.py:47 templates/property_form.html:4
+msgid "New property form"
+msgstr "Nouveau formulaire de propriete"
+
+#: Snow/views.py:52 templates/postings.html:4
+msgid "Postings"
+msgstr "Publications"
+
+#: Snow/views.py:58
+msgid "Snow removal needed in NDG"
+msgstr "Deneigement requis a NDG"
+
+#: Snow/views.py:59 Snow/views.py:69
+msgid "Client post"
+msgstr "Publication client"
+
+#: Snow/views.py:60
+msgid "Driveway, front stairs, and walkway. Start after snowfall ends."
+msgstr "Entree, escaliers avant et passage. Debut apres la fin de la neige."
+
+#: Snow/views.py:63
+msgid "Shoveller available this evening"
+msgstr "Deneigeur disponible ce soir"
+
+#: Snow/views.py:64 Snow/views.py:74
+msgid "Worker profile"
+msgstr "Profil travailleur"
+
+#: Snow/views.py:65
+msgid "Can cover 8 km by transit. Salt spreading available if provided."
+msgstr "Peut couvrir 8 km en transport. Epandage de sel possible si fourni."
+
+#: Snow/views.py:68
+msgid "Verdun duplex needs entrance cleared"
+msgstr "Un duplex a Verdun a besoin d'une entree degagee"
+
+#: Snow/views.py:70
+msgid "Single entrance and stairs. Flexible completion time tomorrow morning."
+msgstr "Entree unique et escaliers. Heure de fin flexible demain matin."
+
+#: Snow/views.py:73
+msgid "Weekend availability near Metro"
+msgstr "Disponibilite la fin de semaine pres du metro"
+
+#: Snow/views.py:75
+msgid "Open Friday to Sunday. Prefers locations close to public transit."
+msgstr "Disponible du vendredi au dimanche. Prefere les lieux pres du transport public."
+
+#: Snow/views.py:83 Snow/views.py:86
+msgid "Profile and settings"
+msgstr "Profil et parametres"
+
+#: Snow/views.py:85
+msgid "Profile"
+msgstr "Profil"
+
+#: Snow/views.py:88
+msgid ""
+"Use this area for account details, notification preferences, payment "
+"methods, and saved accessibility settings."
+msgstr ""
+"Utilisez cette zone pour les details du compte, les preferences de "
+"notification, les modes de paiement et les reglages d'accessibilite "
+"enregistres."
+
+#: Snow/views.py:91
+msgid "Back to postings"
+msgstr "Retour aux publications"
+
+#: Snow/views.py:97 Snow/views.py:99
+msgid "Themes"
+msgstr "Themes"
+
+#: Snow/views.py:100
+msgid "More themes will live here"
+msgstr "D'autres themes seront ajoutes ici"
+
+#: Snow/views.py:102
+msgid ""
+"Use this page for additional color systems, accessibility presets, or saved "
+"user themes."
+msgstr ""
+"Utilisez cette page pour des palettes supplementaires, des reglages "
+"d'accessibilite ou des themes utilisateur enregistres."
+
+#: Snow/views.py:105 Snow/views.py:119
+msgid "Back to preferences"
+msgstr "Retour aux preferences"
+
+#: Snow/views.py:111 Snow/views.py:113 templates/home.html:30
+msgid "Languages"
+msgstr "Langues"
+
+#: Snow/views.py:114
+msgid "More languages page"
+msgstr "Page des langues supplementaires"
+
+#: Snow/views.py:116
+msgid ""
+"Arabic, Italian, and future languages can be managed here when you are ready "
+"to add them."
+msgstr ""
+"L'arabe, l'italien et les futures langues pourront etre geres ici lorsque "
+"vous serez pret a les ajouter."
+
+#: components/nav/nav.html:2 templates/includes/nav.html:2
+msgid "Application header"
+msgstr "En-tete de l'application"
+
+#: soen357/settings.py:114 templates/home.html:39
+msgid "English"
+msgstr "Anglais"
+
+#: soen357/settings.py:115 templates/home.html:43
+msgid "French"
+msgstr "Francais"
+
+#: soen357/settings.py:116 templates/home.html:51
+msgid "Spanish"
+msgstr "Espagnol"
+
+#: templates/account_creation.html:10 templates/worker_registration.html:10
+msgid "Skip for now"
+msgstr "Passer pour le moment"
+
+#: templates/account_creation.html:11 templates/worker_registration.html:11
+msgid "Setup later"
+msgstr "Configurer plus tard"
+
+#: templates/account_creation.html:22
+msgid "Create your account"
+msgstr "Creez votre compte"
+
+#: templates/account_creation.html:23
+msgid "Choose a role first, then add the details needed for your profile."
+msgstr "Choisissez d'abord un role, puis ajoutez les details necessaires a votre profil."
+
+#: templates/account_creation.html:26
+msgid "Role selection"
+msgstr "Selection du role"
+
+#: templates/account_creation.html:28
+msgid "I want to shovel"
+msgstr "Je veux pelleter"
+
+#: templates/account_creation.html:29
+msgid "Worker"
+msgstr "Travailleur"
+
+#: templates/account_creation.html:32
+msgid "I want my property's snow cleared"
+msgstr "Je veux faire deneiger ma propriete"
+
+#: templates/account_creation.html:33
+msgid "Client"
+msgstr "Client"
+
+#: templates/account_creation.html:39
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: templates/account_creation.html:40
+msgid "Choose a username"
+msgstr "Choisissez un nom d'utilisateur"
+
+#: templates/account_creation.html:43
+msgid "Email"
+msgstr "Courriel"
+
+#: templates/account_creation.html:47
+msgid "Phone (optional)"
+msgstr "Telephone (optionnel)"
+
+#: templates/account_creation.html:51
+msgid "Password"
+msgstr "Mot de passe"
+
+#: templates/account_creation.html:52
+msgid "8-20 characters"
+msgstr "8 a 20 caracteres"
+
+#: templates/account_creation.html:55
+msgid "Repeat password"
+msgstr "Repetez le mot de passe"
+
+#: templates/account_creation.html:56
+msgid "Repeat above"
+msgstr "Repetez ci-dessus"
+
+#: templates/account_creation.html:64 templates/home.html:118
+msgid "Next page"
+msgstr "Page suivante"
+
+#: templates/account_creation.html:65 templates/account_creation.html:88
+msgid "Continue to worker setup"
+msgstr "Continuer vers le profil travailleur"
+
+#: templates/account_creation.html:85
+msgid "Continue to property form"
+msgstr "Continuer vers le formulaire de propriete"
+
+#: templates/home.html:4
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: templates/home.html:8
+msgid "Quick actions"
+msgstr "Actions rapides"
+
+#: templates/home.html:10
+msgid "Skip"
+msgstr "Passer"
+
+msgid "French interface"
+msgstr "Interface francaise"
+
+msgid "Verified homeowner"
+msgstr "Proprietaire verifie"
+
+msgid "Transit-ready shoveller"
+msgstr "Deneigeur pret pour le transport en commun"
+
+msgid "Repeat poster"
+msgstr "Client habituel"
+
+msgid "Weekend availability"
+msgstr "Disponible la fin de semaine"
+
+msgid "Posts clear scope, photo references, and flexible evening pickup windows."
+msgstr "Publie des demandes claires avec photos et plages horaires flexibles en soiree."
+
+msgid "Takes on duplex entrances and stair-heavy jobs within a 30-minute commute."
+msgstr "Accepte les entrees de duplex et les travaux avec beaucoup d'escaliers dans un trajet de 30 minutes."
+
+msgid "Usually posts morning jobs with driveway photos and same-day payment."
+msgstr "Publie habituellement des mandats matinaux avec photos de l'entree et paiement le jour meme."
+
+msgid "Prefers weekend work near metro stops and can bring his own salt spreader."
+msgstr "Prefere les travaux de fin de semaine pres du metro et peut apporter son propre epandeur."
+
+msgid "NDG duplex needs front steps and walkway cleared"
+msgstr "Duplex a NDG: degager les marches avant et le passage"
+
+msgid "Tonight after 7:00 PM"
+msgstr "Ce soir apres 19 h"
+
+msgid "Front stairs, short walkway, and one parking strip after the snowfall slows down."
+msgstr "Escaliers avant, court passage et une bande de stationnement une fois la neige plus calme."
+
+msgid "Salt is already on site. The client added pictures and can message door access notes before arrival."
+msgstr "Le sel est deja sur place. Le client a ajoute des photos et peut envoyer les consignes d'acces avant l'arrivee."
+
+msgid "Front steps"
+msgstr "Marches avant"
+
+msgid "Walkway"
+msgstr "Passage"
+
+msgid "Parking strip"
+msgstr "Bande de stationnement"
+
+msgid "Verdun evening shoveller taking jobs near Jolicoeur"
+msgstr "Deneigeur du soir a Verdun pres de Jolicoeur"
+
+msgid "From $40 per visit"
+msgstr "A partir de 40 $ par visite"
+
+msgid "Available 6:30 PM to 10:30 PM"
+msgstr "Disponible de 18 h 30 a 22 h 30"
+
+msgid "Best fit for entrances, duplex stairs, and compact driveways within transit range."
+msgstr "Ideal pour les entrees, les escaliers de duplex et les petites entrees accessibles en transport."
+
+msgid "Samir can reach most jobs by bus and metro, and he is comfortable handling repeat bookings after storms."
+msgstr "Samir peut rejoindre la plupart des mandats en bus ou en metro et accepte facilement les reservations recurrentes apres les tempetes."
+
+msgid "Compact driveway"
+msgstr "Petite entree"
+
+msgid "LaSalle driveway and side path needed before 9:00 AM"
+msgstr "Entree et passage lateral a LaSalle avant 9 h"
+
+msgid "Tomorrow before 9:00 AM"
+msgstr "Demain avant 9 h"
+
+msgid "Two-car driveway, side path to the bins, and light salting if the worker can do it."
+msgstr "Entree pour deux voitures, passage lateral vers les bacs et salage leger si le travailleur peut le faire."
+
+msgid "The account usually posts with photo guides and pays right after the work is marked complete."
+msgstr "Ce compte publie habituellement avec des guides photo et paie des que le travail est complete."
+
+msgid "Driveway"
+msgstr "Entree"
+
+msgid "Side path"
+msgstr "Passage lateral"
+
+msgid "Bins access"
+msgstr "Acces aux bacs"
+
+msgid "Weekend worker covering snow clearing near Snowdon"
+msgstr "Travailleur de fin de semaine pour le deneigement pres de Snowdon"
+
+msgid "From $45 per visit"
+msgstr "A partir de 45 $ par visite"
+
+msgid "Friday to Sunday"
+msgstr "Du vendredi au dimanche"
+
+msgid "Open to morning or late-night jobs, especially homes close to metro stations."
+msgstr "Disponible pour des mandats le matin ou tard le soir, surtout pres des stations de metro."
+
+msgid "Alejandro brings his own shovel kit and is open to recurring service for the same address."
+msgstr "Alejandro apporte son propre equipement et accepte les services recurrents a la meme adresse."
+
+msgid "Salt spread"
+msgstr "Epandage de sel"
+
+msgid "Area"
+msgstr "Secteur"
+
+msgid "When"
+msgstr "Horaire"
+
+msgid "View account"
+msgstr "Voir le compte"
+
+msgid "Budget"
+msgstr "Budget"
+
+msgid "Posted by"
+msgstr "Publie par"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Areas included"
+msgstr "Zones incluses"
+
+msgid "Active postings"
+msgstr "Publications actives"
+
+msgid "Current jobs or availability shared from this account."
+msgstr "Mandats ou disponibilites actuellement partages par ce compte."
+
+msgid "Posting not found."
+msgstr "Publication introuvable."
+
+msgid "Account not found."
+msgstr "Compte introuvable."
+
+#: templates/home.html:11 templates/property_form.html:100
+#: templates/worker_registration.html:95
+msgid "Go to content"
+msgstr "Aller au contenu"
+
+#: templates/home.html:21
+msgid "Language choice"
+msgstr "Choix de langue"
+
+#: templates/home.html:21
+msgid "Choix de langue"
+msgstr "Choix de langue"
+
+#: templates/home.html:22
+msgid "Set up your experience before you continue"
+msgstr "Configurez votre experience avant de continuer"
+
+#: templates/home.html:24
+msgid ""
+"Choose the language, text size, sound support, and theme that feel right for "
+"you."
+msgstr ""
+"Choisissez la langue, la taille du texte, l'assistance audio et le theme qui "
+"vous conviennent."
+
+#: templates/home.html:31
+msgid "Pick the main language for the app."
+msgstr "Choisissez la langue principale de l'application."
+
+#: templates/home.html:40
+msgid "Default English interface"
+msgstr "Interface anglaise par defaut"
+
+#: templates/home.html:44
+msgid "Interface en francais"
+msgstr "Interface en francais"
+
+#: templates/home.html:47
+msgid "Arabic"
+msgstr "Arabe"
+
+#: templates/home.html:48
+msgid "Right-to-left support soon"
+msgstr "Prise en charge de droite a gauche bientot"
+
+#: templates/home.html:52
+msgid "Spanish translations"
+msgstr "Traductions espagnoles"
+
+#: templates/home.html:55
+msgid "Italian"
+msgstr "Italien"
+
+#: templates/home.html:56
+msgid "Coming soon"
+msgstr "Bientot disponible"
+
+#: templates/home.html:59 templates/property_form.html:22
+msgid "Other"
+msgstr "Autre"
+
+#: templates/home.html:60
+msgid "More languages later"
+msgstr "Plus de langues plus tard"
+
+#: templates/home.html:68
+msgid "Text size"
+msgstr "Taille du texte"
+
+#: templates/home.html:69
+msgid "Use larger text if you want easier reading."
+msgstr "Utilisez un texte plus grand pour une lecture plus facile."
+
+#: templates/home.html:71
+msgid "Text size choices"
+msgstr "Choix de taille du texte"
+
+#: templates/home.html:72
+msgid "Small text"
+msgstr "Petit texte"
+
+#: templates/home.html:73
+msgid "Medium text"
+msgstr "Texte moyen"
+
+#: templates/home.html:74
+msgid "Large text"
+msgstr "Grand texte"
+
+#: templates/home.html:79
+msgid "Audio mode"
+msgstr "Mode audio"
+
+#: templates/home.html:80
+msgid "Turn on voice-friendly guidance."
+msgstr "Activez une assistance vocale adaptee."
+
+#: templates/home.html:84 templates/home.html:150
+msgid "Off"
+msgstr "Desactive"
+
+#: templates/home.html:91
+msgid "Themes / colors"
+msgstr "Themes / couleurs"
+
+#: templates/home.html:92
+msgid "Preview a few high-contrast-friendly looks."
+msgstr "Previsualisez quelques styles adaptes au contraste eleve."
+
+#: templates/home.html:96 templates/home.html:100 templates/home.html:104
+msgid "Words"
+msgstr "Mots"
+
+#: templates/home.html:97
+msgid "Soft light"
+msgstr "Lumiere douce"
+
+#: templates/home.html:101
+msgid "Warm sand"
+msgstr "Sable chaud"
+
+#: templates/home.html:105
+msgid "Night contrast"
+msgstr "Contraste nuit"
+
+#: templates/home.html:109
+msgid "More themes"
+msgstr "Plus de themes"
+
+#: templates/home.html:116
+msgid "Continue"
+msgstr "Continuer"
+
+#: templates/home.html:119
+msgid "Go to sign up"
+msgstr "Aller a l'inscription"
+
+#: templates/home.html:150
+msgid "On"
+msgstr "Active"
+
+#: templates/postings.html:9
+msgid "Profile & settings"
+msgstr "Profil et parametres"
+
+#: templates/postings.html:10
+msgid "Make a post"
+msgstr "Creer une publication"
+
+#: templates/postings.html:13
+msgid "Filters"
+msgstr "Filtres"
+
+#: templates/postings.html:15
+msgid "Price range"
+msgstr "Fourchette de prix"
+
+#: templates/postings.html:16
+msgid "$20 - $80"
+msgstr "20 $ - 80 $"
+
+#: templates/postings.html:19
+msgid "Start time"
+msgstr "Heure de debut"
+
+#: templates/postings.html:23
+msgid "End time"
+msgstr "Heure de fin"
+
+#: templates/postings.html:27
+msgid "Area type"
+msgstr "Type de zone"
+
+#: templates/postings.html:29
+msgid "Any area"
+msgstr "Toute zone"
+
+#: templates/postings.html:30 templates/property_form.html:19
+msgid "Entrance"
+msgstr "Entree"
+
+#: templates/postings.html:31 templates/property_form.html:20
+msgid "Stairs"
+msgstr "Escaliers"
+
+#: templates/postings.html:32 templates/property_form.html:21
+msgid "Garage"
+msgstr "Garage"
+
+#: templates/postings.html:36
+msgid "Extra needs"
+msgstr "Besoins supplementaires"
+
+#: templates/postings.html:37
+msgid "Salt, urgent start, photo guide..."
+msgstr "Sel, depart urgent, guide photo..."
+
+#: templates/postings.html:48
+msgid "Open details"
+msgstr "Ouvrir les details"
+
+#: templates/property_form.html:11
+msgid "Create a new snow clearing post"
+msgstr "Creer une nouvelle demande de deneigement"
+
+#: templates/property_form.html:12
+msgid ""
+"Describe the property, timing, and any extra requirements for the worker."
+msgstr "Decrivez la propriete, l'horaire et toute exigence supplementaire pour le travailleur."
+
+#: templates/property_form.html:18
+msgid "Areas to clear"
+msgstr "Zones a degager"
+
+#: templates/property_form.html:23
+msgid "Walkway, side path, shed access..."
+msgstr "Passage, chemin lateral, acces au cabanon..."
+
+#: templates/property_form.html:27
+msgid "Time to start clearing"
+msgstr "Heure de debut du deneigement"
+
+#: templates/property_form.html:28
+msgid "When snow stops"
+msgstr "Quand la neige arrete"
+
+#: templates/property_form.html:31
+msgid "Other start time"
+msgstr "Autre heure de debut"
+
+#: templates/property_form.html:38
+msgid "Time before all snow should be cleared (optional)"
+msgstr "Heure limite avant que toute la neige soit deneigee (optionnel)"
+
+#: templates/property_form.html:39
+msgid "Tomorrow"
+msgstr "Demain"
+
+#: templates/property_form.html:42
+msgid "Other deadline"
+msgstr "Autre echeance"
+
+#: templates/property_form.html:49
+msgid "Extra services / requirements (optional)"
+msgstr "Services supplementaires / exigences (optionnel)"
+
+#: templates/property_form.html:50
+msgid "Spread salt or sand (must be provided on place)"
+msgstr "Epandre du sel ou du sable (doit etre fourni sur place)"
+
+#: templates/property_form.html:52
+msgid "Other request"
+msgstr "Autre demande"
+
+#: templates/property_form.html:53
+msgid "Shovel around bins, clear path to car, etc."
+msgstr "Pelleter autour des bacs, degager le chemin vers la voiture, etc."
+
+#: templates/property_form.html:61
+msgid "Pay"
+msgstr "Paiement"
+
+#: templates/property_form.html:65 templates/worker_registration.html:33
+msgid "Address"
+msgstr "Adresse"
+
+#: templates/property_form.html:66
+msgid "456 Snowbank Avenue"
+msgstr "456 avenue Snowbank"
+
+#: templates/property_form.html:71
+msgid "Upload a picture of your property"
+msgstr "Televersez une photo de votre propriete"
+
+#: templates/property_form.html:75 templates/property_form.html:84
+msgid "Choose a file"
+msgstr "Choisir un fichier"
+
+#: templates/property_form.html:80
+msgid "Upload a picture of where to stash snow (optional)"
+msgstr "Televersez une photo de l'endroit ou empiler la neige (optionnel)"
+
+#: templates/property_form.html:91
+msgid "Save for future posts"
+msgstr "Enregistrer pour de futures publications"
+
+#: templates/property_form.html:92
+msgid "Post"
+msgstr "Publier"
+
+#: templates/property_form.html:99
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/worker_registration.html:22
+msgid "Worker service area"
+msgstr "Zone de service du travailleur"
+
+#: templates/worker_registration.html:23
+msgid "Set the travel rules and weekly availability you want clients to see."
+msgstr "Definissez les regles de deplacement et les disponibilites hebdomadaires visibles par les clients."
+
+#: templates/worker_registration.html:29
+msgid "Near my address"
+msgstr "Pres de mon adresse"
+
+#: templates/worker_registration.html:34
+msgid "123 Example Street"
+msgstr "123 rue Exemple"
+
+#: templates/worker_registration.html:37
+msgid "Range (km)"
+msgstr "Rayon (km)"
+
+#: templates/worker_registration.html:44
+msgid "Near public transport"
+msgstr "Pres du transport public"
+
+#: templates/worker_registration.html:48
+msgid "Max commute time"
+msgstr "Temps de trajet maximal"
+
+#: templates/worker_registration.html:49
+msgid "30 minutes"
+msgstr "30 minutes"
+
+#: templates/worker_registration.html:55
+msgid "Available hours (optional)"
+msgstr "Heures disponibles (optionnel)"
+
+#: templates/worker_registration.html:56
+msgid "Mark when at least two hours of work would fit your schedule."
+msgstr "Indiquez quand au moins deux heures de travail conviennent a votre horaire."
+
+#: templates/worker_registration.html:59
+msgid "Weekly availability"
+msgstr "Disponibilite hebdomadaire"
+
+#: templates/worker_registration.html:60
+msgid "Time"
+msgstr "Heure"
+
+#: templates/worker_registration.html:61
+msgid "Mon"
+msgstr "Lun"
+
+#: templates/worker_registration.html:62
+msgid "Tue"
+msgstr "Mar"
+
+#: templates/worker_registration.html:63
+msgid "Wed"
+msgstr "Mer"
+
+#: templates/worker_registration.html:64
+msgid "Thu"
+msgstr "Jeu"
+
+#: templates/worker_registration.html:65
+msgid "Fri"
+msgstr "Ven"
+
+#: templates/worker_registration.html:66
+msgid "Sat"
+msgstr "Sam"
+
+#: templates/worker_registration.html:67
+msgid "Sun"
+msgstr "Dim"
+
+#: templates/worker_registration.html:69
+msgid "Morning"
+msgstr "Matin"
+
+#: templates/worker_registration.html:74
+msgid "Afternoon"
+msgstr "Apres-midi"
+
+#: templates/worker_registration.html:79
+msgid "Evening"
+msgstr "Soir"
+
+#: templates/worker_registration.html:84
+msgid "Night"
+msgstr "Nuit"
+
+#: templates/worker_registration.html:94
+msgid "Done"
+msgstr "Termine"
+
+#~ msgid "Login is coming next"
+#~ msgstr "La connexion arrive ensuite"
+
+#~ msgid ""
+#~ "This is the entry point for returning users. You can keep building the "
+#~ "authentication flow from here."
+#~ msgstr ""
+#~ "Ceci est le point d'entree des utilisateurs existants. Vous pouvez "
+#~ "continuer a construire le flux d'authentification a partir d'ici."
+
+#~ msgid "Next step"
+#~ msgstr "Etape suivante"
+
+#~ msgid "Sign up page placeholder"
+#~ msgstr "Espace reserve pour l'inscription"
+
+#~ msgid ""
+#~ "This is the next screen after preferences. It is ready for your account "
+#~ "creation form."
+#~ msgstr ""
+#~ "Ceci est l'ecran suivant apres les preferences. Il est pret pour votre "
+#~ "formulaire de creation de compte."

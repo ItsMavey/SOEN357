@@ -1,0 +1,22 @@
+.button-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    min-height: 120px;
+    padding: 1.5rem;
+    background: var(--panel-strong);
+    border: 1px solid var(--line);
+    border-radius: 0.8rem;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-strong);
+    transition: transform 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+}
+
+.button-tile:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+}

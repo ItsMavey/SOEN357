@@ -1,0 +1,33 @@
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.fact-grid--detail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 1.2rem 0;
+}
+
+.fact-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.fact-grid dt {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.fact-grid dd {
+    font-weight: 800;
+    color: var(--text-strong);
+    margin: 0;
+}

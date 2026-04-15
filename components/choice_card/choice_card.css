@@ -1,0 +1,86 @@
+.choice-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    padding: 2.5rem;
+    background: var(--panel-strong);
+    border: 2px solid var(--line);
+    border-radius: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-strong);
+    cursor: pointer;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    font-family: inherit;
+}
+
+.choice-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.choice-card.choice-card--selected,
+.choice-card[data-state="selected"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.choice-card.choice-card--selected .choice-card__support,
+.choice-card[data-state="selected"] .choice-card__support {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.choice-card__title {
+    font-weight: 800;
+    font-size: 1.05rem;
+    display: block;
+    text-align: center;
+}
+
+.choice-card__support {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    margin-top: 0.1rem;
+}
+
+.choice-card [data-theme-sample] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    border-radius: 0.6rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border: 2px solid rgba(0,0,0,0.08);
+    background: var(--bg);
+}
+
+.choice-card--dawn [data-theme-sample] { background: #fffcf7; color: #29445f; }
+.choice-card--sand [data-theme-sample] { background: #fdf6e3; color: #5b4020; }
+.choice-card--night [data-theme-sample] { background: #0d1117; color: #d6e7ff; }
+
+.choice-card[onclick],
+.choice-card[href] {
+    align-items: center;
+    text-align: center;
+}
+
+.theme-label {
+    display: block;
+    margin-top: 0.6rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-soft);
+}
+
+.choice-card[data-state="selected"] .theme-label {
+    color: #fff;
+}
+
+.choice-card--selected [data-theme-sample] {
+    border-color: rgba(255,255,255,0.4);
+}

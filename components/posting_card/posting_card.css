@@ -1,0 +1,106 @@
+.posting-card {
+    min-height: 280px;
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: 0 18px 40px var(--shadow);
+    border-radius: 1.5rem;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.posting-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px var(--shadow);
+}
+
+.posting-card header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+}
+
+.posting-card header small {
+    display: block;
+    color: var(--accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+}
+
+.posting-card header strong {
+    font-weight: 800;
+    color: var(--text-strong);
+}
+
+.posting-card h2 {
+    font-size: 1.55rem;
+    color: var(--text-strong);
+    text-shadow: var(--text-shadow);
+}
+
+.posting-card p {
+    color: var(--text-soft);
+}
+
+.posting-card dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.posting-card dl div {
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--panel-strong);
+}
+
+.posting-card dt {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+}
+
+.posting-card dd {
+    color: var(--text-strong);
+    font-weight: 800;
+}
+
+.posting-card footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+}
+
+.posting-card footer section {
+    display: grid;
+}
+
+.posting-card footer a:first-child {
+    color: var(--accent);
+    font-weight: 800;
+    text-decoration: none;
+    text-shadow: var(--text-shadow);
+}
+
+.posting-card footer p {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
+
+.posting-card footer a:last-child {
+    align-self: end;
+    color: var(--accent);
+    font-weight: 800;
+    text-decoration: none;
+    text-shadow: var(--text-shadow);
+}

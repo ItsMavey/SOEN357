@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Welcome" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% trans "Skip" as skip_label %}
+{% trans "Go to content" as go_to_content_label %}
+{% trans "Account" as account_label %}
+{% trans "Login" as login_label %}
+{% trans "Next page" as next_page_label %}
+{% trans "Go to sign up" as signup_label %}
+{% url 'login' as login_href %}
+{% url 'signup' as signup_href %}
+
+{% component "shell" layout="page" variant="intro" %}
+    {% fill "rail_left" %}
+        {% component "rail_link" url="#main-content" eyebrow=skip_label title=go_to_content_label tone="secondary" / %}
+        {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="hero" %}
+                {% component "heading" eyebrow="Language choice / Choix de langue" title="Set up your experience before you continue" support="Choose the language, text size, sound support, and theme that feel right for you." level=1 / %}
+            {% endcomponent %}
+
+            {% component "surface" kind="panel" %}
+                {% component "heading" title="Languages" support="Pick the main language for the app." / %}
+
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% component "grid" variant="languages" %}
+                        {% component "choice_card" value="en" name="language" selected="{% if LANGUAGE_CODE == 'en' %}True{% endif %}" title="English" class="span-2" / %}
+                        {% component "choice_card" value="fr" name="language" selected="{% if LANGUAGE_CODE == 'fr' %}True{% endif %}" title="French" class="span-2" / %}
+                        
+                        {% component "choice_card" href="{% url 'languages' %}" title="Arabic" %}
+                             عربي<br><small>(Arabic)</small>
+                        {% endcomponent %}
+                        {% component "choice_card" value="es" name="language" selected="{% if LANGUAGE_CODE == 'es' %}True{% endif %}" title="Spanish" / %}
+                        {% component "choice_card" href="{% url 'languages' %}" title="Italian" / %}
+                        {% component "choice_card" href="{% url 'languages' %}" title="Other" / %}
+                    {% endcomponent %}
+                </form>
+            {% endcomponent %}
+
+            {% component "grid" variant="preferences" %}
+                {% component "surface" kind="panel" %}
+                    {% component "heading" title="Text size" support="Use larger text if you want easier reading." / %}
+
+                    {% component "segment_control" label="Text size choices" %}
+                        <button type="button" data-ui="segment" data-font-size="small" onclick="changeFontSize('small')" aria-pressed="false" aria-label="{% trans 'Small text' %}">A</button>
+                        <button type="button" data-ui="segment" data-font-size="medium" onclick="changeFontSize('medium')" aria-pressed="true" aria-label="{% trans 'Medium text' %}">A</button>
+                        <button type="button" data-ui="segment" data-scale="large" data-font-size="extra-large" onclick="changeFontSize('extra-large')" aria-pressed="false" aria-label="{% trans 'Large text' %}">A</button>
+                    {% endcomponent %}
+
+                    {% component "stack" gap="0.5rem" %}
+                        {% component "heading" title="Audio mode" support="Turn on voice-friendly guidance." compact=True / %}
+                        {% component "toggle_switch" label_on="On" label_off="Off" id="audioToggle" onclick="toggleAudioMode()" / %}
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                {% component "surface" kind="panel" %}
+                    {% component "heading" title="Themes / colors" support="Preview a few high-contrast-friendly looks." / %}
+                    {% component "grid" variant="themes" %}
+                        {% component "choice_card" tone="dawn" type="button" onclick="changeTheme('dawn')" data-ui="theme" data-theme-choice="dawn" %}
+                            <div data-theme-sample>
+                                <span class="theme-label">{% trans "Words" %}</span>
+                            </div>
+                        {% endcomponent %}
+                        {% component "choice_card" tone="sand" type="button" onclick="changeTheme('sand')" data-ui="theme" data-theme-choice="sand" %}
+                            <div data-theme-sample>
+                                <span class="theme-label">{% trans "Words" %}</span>
+                            </div>
+                        {% endcomponent %}
+                        {% component "choice_card" tone="night" type="button" onclick="changeTheme('night')" data-ui="theme" data-theme-choice="night" %}
+                            <div data-theme-sample>
+                                <span class="theme-label">{% trans "Words" %}</span>
+                            </div>
+                        {% endcomponent %}
+                        {% component "choice_card" href="{% url 'themes' %}" tone="ghost" %}
+                            <div data-theme-sample>+</div>
+                            <span class="theme-label">More themes</span>
+                        {% endcomponent %}
+                    {% endcomponent %}
+                {% endcomponent %}
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+
+    {% fill "rail_right" %}
+        {% component "rail_link" url=signup_href eyebrow=next_page_label title=signup_label tone="primary" arrow=True stretch=True / %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    function setSelected(groupSelector, activeSelector) {
+        document.querySelectorAll(groupSelector).forEach((element) => {
+            const selected = element.matches(activeSelector);
+            element.toggleAttribute('data-state', selected);
+            if (element.hasAttribute('aria-pressed')) {
+                element.setAttribute('aria-pressed', String(selected));
+            }
+        });
+    }
+
+    function syncControlsFromStorage() {
+        const currentTheme = localStorage.getItem('app_theme') || 'dawn';
+        const currentSize = localStorage.getItem('app_fontsize') || 'medium';
+        const currentAudio = localStorage.getItem('app_audio_mode') || 'off';
+
+        setSelected('[data-ui="theme"][data-theme-choice]', `[data-ui="theme"][data-theme-choice="${currentTheme}"]`);
+        setSelected('[data-ui="segment"][data-font-size]', `[data-ui="segment"][data-font-size="${currentSize}"]`);
+
+        const toggle = document.getElementById('audioToggle');
+        if (toggle) {
+            const isOn = currentAudio === 'on';
+            toggle.toggleAttribute('data-state', isOn);
+            toggle.setAttribute('aria-pressed', String(isOn));
+            toggle.querySelector('[data-toggle-label]').textContent = isOn ? "{% trans 'On' %}" : "{% trans 'Off' %}";
+        }
+    }
+
+    function toggleAudioMode() {
+        const nextMode = (localStorage.getItem('app_audio_mode') || 'off') === 'on' ? 'off' : 'on';
+        changeAudioMode(nextMode);
+        syncControlsFromStorage();
+    }
+
+    const previousChangeTheme = changeTheme;
+    changeTheme = function(themeName) {
+        previousChangeTheme(themeName);
+        syncControlsFromStorage();
+    };
+
+    const previousChangeFontSize = changeFontSize;
+    changeFontSize = function(size) {
+        previousChangeFontSize(size);
+        syncControlsFromStorage();
+    };
+
+    syncControlsFromStorage();
+</script>
+{% endblock %}

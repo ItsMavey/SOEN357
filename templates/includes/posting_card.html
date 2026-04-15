@@ -1,0 +1,29 @@
+{% load i18n %}
+<article data-card="posting">
+    <div data-posting-topline>
+        <span data-ui="eyebrow">{{ posting.kind }}</span>
+        <span data-posting-price>{{ posting.budget }}</span>
+    </div>
+
+    <h2>{{ posting.title }}</h2>
+    <p data-ui="support">{{ posting.summary }}</p>
+
+    <dl data-posting-facts>
+        <div>
+            <dt>{% trans "Area" %}</dt>
+            <dd>{{ posting.location }}</dd>
+        </div>
+        <div>
+            <dt>{% trans "When" %}</dt>
+            <dd>{{ posting.window }}</dd>
+        </div>
+    </dl>
+
+    <div data-account-chip>
+        <div>
+            <a href="{% url 'account_detail' posting.account.slug %}" data-account-link>{{ posting.account.name }}</a>
+            <p>{{ posting.account.badge }} · {{ posting.account.area }}</p>
+        </div>
+        <a href="{% url 'posting_detail' posting.slug %}" data-inline-link>{% trans "Open details" %}</a>
+    </div>
+</article>

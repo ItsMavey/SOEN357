@@ -1,0 +1,52 @@
+.nav-component {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: min(1120px, calc(100% - 2rem));
+    margin: 1.25rem auto 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--panel);
+    box-shadow: 0 18px 60px rgba(14, 28, 61, 0.12);
+}
+
+.nav-component > div {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 0.8rem;
+    background: var(--accent);
+    color: white;
+    font-size: 1.4rem;
+    box-shadow: 0 10px 24px rgba(58, 107, 255, 0.28);
+}
+
+.nav-component section {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.nav-component a {
+    color: var(--text-strong);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-shadow: var(--text-shadow);
+}
+
+.nav-component p {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    text-shadow: var(--text-shadow);
+}
+
+@media (max-width: 700px) {
+    .nav-component {
+        width: min(1120px, calc(100% - 1rem));
+        margin-top: 0.75rem;
+        padding: 0.85rem 1rem;
+    }
+}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Postings" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% component "shell" layout="content" %}
+    {% fill "sidebar" %}
+        {% component "button_tile" label="Profile & settings" href="{% url 'profile_settings' %}" / %}
+        {% component "button_tile" label="Make a post" href="{% url 'property_form' %}" / %}
+
+        {% component "surface" kind="panel" %}
+            {% component "form_group" title="Filters" %}
+                {% component "text_field" label="Price range" placeholder="$20 - $80" / %}
+                {% component "text_field" label="Start time" type="time" / %}
+                {% component "text_field" label="End time" type="time" / %}
+                
+                <label class="text-field">
+                    <span class="text-field__label">{% trans "Area type" %}</span>
+                    <select class="text-field__input">
+                        <option>{% trans "Any area" %}</option>
+                        <option>{% trans "Entrance" %}</option>
+                        <option>{% trans "Stairs" %}</option>
+                        <option>{% trans "Garage" %}</option>
+                    </select>
+                </label>
+
+                {% component "text_field" label="Extra needs" placeholder="Salt, urgent start, photo guide..." / %}
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "grid" variant="postings" %}
+            {% for posting in postings %}
+                {% component "posting_card" posting=posting / %}
+            {% endfor %}
+        {% endcomponent %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

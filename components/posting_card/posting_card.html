@@ -1,0 +1,29 @@
+{% load i18n %}
+<article class="posting-card">
+    <header>
+        <small>{{ posting.kind }}</small>
+        <strong>{{ posting.budget }}</strong>
+    </header>
+
+    <h2>{{ posting.title }}</h2>
+    <p>{{ posting.summary }}</p>
+
+    <dl>
+        <div>
+            <dt>{% trans "Area" %}</dt>
+            <dd>{{ posting.location }}</dd>
+        </div>
+        <div>
+            <dt>{% trans "When" %}</dt>
+            <dd>{{ posting.window }}</dd>
+        </div>
+    </dl>
+
+    <footer>
+        <section>
+            <a href="{% url 'account_detail' posting.account.slug %}">{{ posting.account.name }}</a>
+            <p>{{ posting.account.badge }} · {{ posting.account.area }}</p>
+        </section>
+        <a href="{% url 'posting_detail' posting.slug %}">{% trans "Open details" %}</a>
+    </footer>
+</article>

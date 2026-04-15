@@ -1,0 +1,48 @@
+.rail-link {
+    display: grid;
+    gap: 1rem;
+    height: 180px;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: var(--text-strong);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: 0 18px 40px var(--shadow);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.rail-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px var(--shadow);
+}
+
+.rail-link.is-stretched {
+    height: 50vh;
+}
+
+
+.rail-link small {
+    display: block;
+    color: var(--accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+}
+
+.rail-link strong {
+    text-shadow: var(--text-shadow);
+}
+
+.rail-link p {
+    color: var(--text-soft);
+}
+
+.rail-link span {
+    align-self: end;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--accent);
+    text-shadow: var(--text-shadow);
+}
