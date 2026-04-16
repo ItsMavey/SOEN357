@@ -4,16 +4,26 @@
 {% block title %}{% trans "Postings" %} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Profile & settings" as profile_label %}
+{% trans "Make a post" as make_post_label %}
+{% trans "Filters" as filters_title %}
+{% trans "Price range" as price_label %}
+{% trans "$20 - $80" as price_placeholder %}
+{% trans "Start time" as start_label %}
+{% trans "End time" as end_label %}
+{% trans "Extra needs" as extra_label %}
+{% trans "Salt, urgent start, photo guide..." as extra_placeholder %}
+
 {% component "shell" layout="content" %}
     {% fill "sidebar" %}
-        {% component "button_tile" label="Profile & settings" href="{% url 'profile_settings' %}" / %}
-        {% component "button_tile" label="Make a post" href="{% url 'property_form' %}" / %}
+        {% component "button_tile" label=profile_label href="{% url 'profile_settings' %}" / %}
+        {% component "button_tile" label=make_post_label href="{% url 'property_form' %}" / %}
 
         {% component "surface" kind="panel" %}
-            {% component "form_group" title="Filters" %}
-                {% component "text_field" label="Price range" placeholder="$20 - $80" / %}
-                {% component "text_field" label="Start time" type="time" / %}
-                {% component "text_field" label="End time" type="time" / %}
+            {% component "form_group" title=filters_title %}
+                {% component "text_field" label=price_label placeholder=price_placeholder / %}
+                {% component "text_field" label=start_label type="time" / %}
+                {% component "text_field" label=end_label type="time" / %}
                 
                 <label class="text-field">
                     <span class="text-field__label">{% trans "Area type" %}</span>
@@ -25,7 +35,7 @@
                     </select>
                 </label>
 
-                {% component "text_field" label="Extra needs" placeholder="Salt, urgent start, photo guide..." / %}
+                {% component "text_field" label=extra_label placeholder=extra_placeholder / %}
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}

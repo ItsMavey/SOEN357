@@ -4,10 +4,15 @@
 {% block title %}{{ posting.title }} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Back to postings" as back_label %}
+{% trans "View account" as view_account_label %}
+{% trans "Details" as details_title %}
+{% trans "Areas included" as areas_title %}
+
 {% component "shell" layout="content" %}
     {% fill "sidebar" %}
-        {% component "button_tile" label="Back to postings" href="{% url 'postings' %}" / %}
-        {% component "button_tile" label="View account" href="{% url 'account_detail' posting.account.slug %}" / %}
+        {% component "button_tile" label=back_label href="{% url 'postings' %}" / %}
+        {% component "button_tile" label=view_account_label href="{% url 'account_detail' posting.account.slug %}" / %}
     {% endfill %}
 
     {% fill "default" %}
@@ -35,12 +40,12 @@
 
             {% component "stack" gap="1.5rem" %}
                 <div>
-                    {% component "heading" title="Details" compact=True / %}
+                    {% component "heading" title=details_title compact=True / %}
                     <p>{{ posting.details }}</p>
                 </div>
 
                 <div>
-                    {% component "heading" title="Areas included" compact=True / %}
+                    {% component "heading" title=areas_title compact=True / %}
                     {% component "tag_list" tags=posting.areas / %}
                 </div>
             {% endcomponent %}

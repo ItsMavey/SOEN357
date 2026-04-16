@@ -1,7 +1,7 @@
 .rail-link {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
-    align-content: start;
     height: 180px;
     padding: 2rem;
     border-radius: 1rem;
@@ -41,6 +41,7 @@
 }
 
 .rail-link span {
+    margin-top: auto;
     font-size: 5rem;
     line-height: 1;
     color: var(--accent);

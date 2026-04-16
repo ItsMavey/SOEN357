@@ -4,35 +4,58 @@
 {% block title %}{% trans "Account creation" %} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Skip for now" as skip_label %}
+{% trans "Setup later" as setup_later_label %}
+{% trans "Account" as account_label %}
+{% trans "Login" as login_label %}
+{% trans "Next page" as next_page_label %}
+{% trans "Continue to worker setup" as worker_setup_label %}
+{% trans "Create your account" as create_title %}
+{% trans "Choose a role first, then add the details needed for your profile." as create_support %}
+{% trans "I want to shovel" as shovel_title %}
+{% trans "Worker" as worker_label %}
+{% trans "I want my property's snow cleared" as client_title %}
+{% trans "Client" as client_label %}
+{% trans "Username" as username_label %}
+{% trans "Choose a username" as username_placeholder %}
+{% trans "Email" as email_label %}
+{% trans "Phone (optional)" as phone_label %}
+{% trans "Password" as password_label %}
+{% trans "8-20 characters" as password_placeholder %}
+{% trans "Repeat password" as repeat_password_label %}
+{% trans "Repeat above" as repeat_placeholder %}
+{% url 'login' as login_href %}
+{% url 'postings' as postings_href %}
+{% url 'worker_registration' as worker_href %}
+
 {% component "shell" layout="page" %}
     {% fill "rail_left" %}
-        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Skip for now" title="Setup later" tone="secondary" / %}
-        {% component "rail_link" url="{% url 'login' %}" eyebrow="Account" title="Login" / %}
+        {% component "rail_link" url=postings_href eyebrow=skip_label title=setup_later_label tone="secondary" / %}
+        {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
     {% endfill %}
 
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="panel" flow="spacious" %}
-                {% component "heading" title="Create your account" support="Choose a role first, then add the details needed for your profile." level=1 / %}
+                {% component "heading" title=create_title support=create_support level=1 / %}
 
                 {% component "grid" variant="roles" %}
-                    {% component "choice_card" title="I want to shovel" support="Worker" selected=True type="button" role="worker" ui="role-choice" / %}
-                    {% component "choice_card" title="I want my property's snow cleared" support="Client" type="button" role="client" ui="role-choice" / %}
+                    {% component "choice_card" title=shovel_title support=worker_label selected=True type="button" data_role="worker" data_ui="role-choice" / %}
+                    {% component "choice_card" title=client_title support=client_label type="button" data_role="client" data_ui="role-choice" / %}
                 {% endcomponent %}
-
                 <form class="stack" style="--stack-gap: 1rem;">
-                    {% component "text_field" label="Username" placeholder="Choose a username" / %}
-                    {% component "text_field" label="Email" type="email" placeholder="example@mail.com" / %}
-                    {% component "text_field" label="Phone (optional)" type="tel" placeholder="1 514 123 4567" / %}
-                    {% component "text_field" label="Password" type="password" placeholder="8-20 characters" / %}
-                    {% component "text_field" label="Repeat password" type="password" placeholder="Repeat above" / %}
+                    {% component "text_field" label=username_label placeholder=username_placeholder / %}
+                    {% component "text_field" label=email_label type="email" placeholder="example@mail.com" / %}
+                    {% component "text_field" label=phone_label type="tel" placeholder="1 514 123 4567" / %}
+                    {% component "text_field" label=password_label type="password" placeholder=password_placeholder / %}
+                    {% component "text_field" label=repeat_password_label type="password" placeholder=repeat_placeholder / %}
                 </form>
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}
 
     {% fill "rail_right" %}
-        {% component "rail_link" url="{% url 'worker_registration' %}" eyebrow="Next page" title="Continue to worker setup" tone="primary" arrow=True stretch=True / %}
+        {% component "rail_link" url=worker_href eyebrow=next_page_label title=worker_setup_label tone="primary" arrow=True stretch=True id="accountNextLink" / %}
     {% endfill %}
 {% endcomponent %}
 {% endblock %}
@@ -41,12 +64,14 @@
 <script>
     const roleButtons = document.querySelectorAll('[data-ui="role-choice"][data-role]');
     const nextLink = document.getElementById('accountNextLink');
-    const nextLabel = document.getElementById('accountNextLabel');
 
     function syncAccountRole(role) {
         roleButtons.forEach((button) => {
             button.toggleAttribute('data-state', button.dataset.role === role);
+            button.classList.toggle('choice-card--selected', button.dataset.role === role);
         });
+
+        const nextLabel = nextLink.querySelector('strong');
 
         if (role === 'client') {
             nextLink.href = "{% url 'property_form' %}";
@@ -61,5 +86,8 @@
     roleButtons.forEach((button) => {
         button.addEventListener('click', () => syncAccountRole(button.dataset.role));
     });
+
+    // Initialize state
+    syncAccountRole('worker');
 </script>
 {% endblock %}

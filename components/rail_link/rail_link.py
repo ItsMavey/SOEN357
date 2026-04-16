@@ -13,7 +13,7 @@ class RailLink(Component):
             "arrow": arrow,
             "tone": tone,
             "stretch": stretch,
-            "attrs": attrs,
+            "attrs": {k.replace("_", "-"): v for k, v in attrs.items()},
         }
 
     class Media:

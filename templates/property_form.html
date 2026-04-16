@@ -4,64 +4,86 @@
 {% block title %}{% trans "New property form" %} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Create a new snow clearing post" as form_title %}
+{% trans "Describe the property, timing, and any extra requirements for the worker." as form_support %}
+{% trans "Areas to clear" as areas_title %}
+{% trans "Walkway, side path, shed access..." as areas_placeholder %}
+{% trans "Time to start clearing" as start_title %}
+{% trans "Other start time" as start_label %}
+{% trans "Time before all snow should be cleared (optional)" as deadline_title %}
+{% trans "Other deadline" as deadline_label %}
+{% trans "Extra services / requirements (optional)" as extras_title %}
+{% trans "Other request" as other_request_label %}
+{% trans "Shovel around bins, clear path to car, etc." as other_request_placeholder %}
+{% trans "Pay" as pay_label %}
+{% trans "Address" as address_label %}
+{% trans "456 Snowbank Avenue" as address_placeholder %}
+{% trans "Upload a picture of your property" as upload_property_title %}
+{% trans "Upload a picture of where to stash snow (optional)" as upload_snow_title %}
+{% trans "Choose a file" as choose_file_label %}
+{% trans "Save for future posts" as save_label %}
+{% trans "Post" as post_label %}
+{% trans "Cancel" as cancel_label %}
+{% trans "Go to content" as go_content_label %}
+
 {% component "shell" layout="page" variant="wide" %}
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="panel" flow="spacious" %}
-                {% component "heading" title="Create a new snow clearing post" support="Describe the property, timing, and any extra requirements for the worker." level=1 / %}
+                {% component "heading" title=form_title support=form_support level=1 / %}
 
                 {% component "grid" variant="property" %}
                     {% component "stack" %}
-                        {% component "form_group" title="Areas to clear" %}
+                        {% component "form_group" title=areas_title %}
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Entrance" %}</span></label>
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Stairs" %}</span></label>
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Garage" %}</span></label>
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Other" %}</span></label>
-                            {% component "text_field" label="" placeholder="Walkway, side path, shed access..." / %}
+                            {% component "text_field" label="" placeholder=areas_placeholder / %}
                         {% endcomponent %}
 
-                        {% component "form_group" title="Time to start clearing" %}
+                        {% component "form_group" title=start_title %}
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "When snow stops" %}</span></label>
-                            {% component "text_field" label="Other start time" type="datetime-local" / %}
+                            {% component "text_field" label=start_label type="datetime-local" / %}
                         {% endcomponent %}
 
-                        {% component "form_group" title="Time before all snow should be cleared (optional)" %}
+                        {% component "form_group" title=deadline_title %}
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Tomorrow" %}</span></label>
-                            {% component "text_field" label="Other deadline" type="datetime-local" / %}
+                            {% component "text_field" label=deadline_label type="datetime-local" / %}
                         {% endcomponent %}
 
-                        {% component "form_group" title="Extra services / requirements (optional)" %}
+                        {% component "form_group" title=extras_title %}
                             <label class="toggle-row"><input type="checkbox"> <span>{% trans "Spread salt or sand (must be provided on place)" %}</span></label>
-                            {% component "text_field" label="Other request" placeholder="Shovel around bins, clear path to car, etc." / %}
+                            {% component "text_field" label=other_request_label placeholder=other_request_placeholder / %}
                         {% endcomponent %}
                     {% endcomponent %}
 
                     {% component "stack" %}
                         {% component "stack" %}
-                            {% component "text_field" label="Pay" type="number" placeholder="40" / %}
-                            {% component "text_field" label="Address" placeholder="456 Snowbank Avenue" / %}
+                            {% component "text_field" label=pay_label type="number" placeholder="40" / %}
+                            {% component "text_field" label=address_label placeholder=address_placeholder / %}
                         {% endcomponent %}
 
-                        {% component "form_group" title="Upload a picture of your property" %}
-                            {% component "upload_field" label="Choose a file" / %}
+                        {% component "form_group" title=upload_property_title %}
+                            {% component "upload_field" label=choose_file_label / %}
                         {% endcomponent %}
 
-                        {% component "form_group" title="Upload a picture of where to stash snow (optional)" %}
-                            {% component "upload_field" label="Choose a file" / %}
+                        {% component "form_group" title=upload_snow_title %}
+                            {% component "upload_field" label=choose_file_label / %}
                         {% endcomponent %}
                     {% endcomponent %}
                 {% endcomponent %}
 
                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    {% component "button" label="Save for future posts" href="{% url 'postings' %}" tone="ghost" / %}
-                    {% component "button" label="Post" href="{% url 'postings' %}" / %}
+                    {% component "button" label=save_label href="{% url 'postings' %}" tone="ghost" / %}
+                    {% component "button" label=post_label href="{% url 'postings' %}" / %}
                 </div>
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}
 
     {% fill "rail_right" %}
-        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Cancel" title="Go to content" tone="secondary" / %}
+        {% component "rail_link" url="{% url 'postings' %}" eyebrow=cancel_label title=go_content_label tone="secondary" / %}
     {% endfill %}
 {% endcomponent %}
 {% endblock %}

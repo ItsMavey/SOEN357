@@ -10,6 +10,27 @@
 {% trans "Login" as login_label %}
 {% trans "Next page" as next_page_label %}
 {% trans "Go to sign up" as signup_label %}
+{% trans "Language choice / Choix de langue" as lang_eyebrow %}
+{% trans "Set up your experience before you continue" as setup_title %}
+{% trans "Choose the language, text size, sound support, and theme that feel right for you." as setup_support %}
+{% trans "Languages" as languages_title %}
+{% trans "Pick the main language for the app." as languages_support %}
+{% trans "English" as english_label %}
+{% trans "French" as french_label %}
+{% trans "Arabic" as arabic_label %}
+{% trans "Spanish" as spanish_label %}
+{% trans "Italian" as italian_label %}
+{% trans "Other" as other_label %}
+{% trans "Text size" as textsize_title %}
+{% trans "Use larger text if you want easier reading." as textsize_support %}
+{% trans "Text size choices" as textsize_choices_label %}
+{% trans "Audio mode" as audio_title %}
+{% trans "Turn on voice-friendly guidance." as audio_support %}
+{% trans "On" as on_label %}
+{% trans "Off" as off_label %}
+{% trans "Themes / colors" as themes_title %}
+{% trans "Preview a few high-contrast-friendly looks." as themes_support %}
+{% trans "More themes" as more_themes_label %}
 {% url 'login' as login_href %}
 {% url 'signup' as signup_href %}
 
@@ -22,67 +43,67 @@
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="hero" %}
-                {% component "heading" eyebrow="Language choice / Choix de langue" title="Set up your experience before you continue" support="Choose the language, text size, sound support, and theme that feel right for you." level=1 / %}
+                {% component "heading" eyebrow=lang_eyebrow title=setup_title support=setup_support level=1 / %}
             {% endcomponent %}
 
             {% component "surface" kind="panel" %}
-                {% component "heading" title="Languages" support="Pick the main language for the app." / %}
+                {% component "heading" title=languages_title support=languages_support / %}
 
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% component "grid" variant="languages" %}
-                        {% component "choice_card" value="en" name="language" selected="{% if LANGUAGE_CODE == 'en' %}True{% endif %}" title="English" class="span-2" / %}
-                        {% component "choice_card" value="fr" name="language" selected="{% if LANGUAGE_CODE == 'fr' %}True{% endif %}" title="French" class="span-2" / %}
+                        {% component "choice_card" value="en" name="language" selected="{% if LANGUAGE_CODE == 'en' %}True{% endif %}" title=english_label class="span-2" / %}
+                        {% component "choice_card" value="fr" name="language" selected="{% if LANGUAGE_CODE == 'fr' %}True{% endif %}" title=french_label class="span-2" / %}
                         
-                        {% component "choice_card" href="{% url 'languages' %}" title="Arabic" %}
+                        {% component "choice_card" href="{% url 'languages' %}" title=arabic_label %}
                              عربي<br><small>(Arabic)</small>
                         {% endcomponent %}
-                        {% component "choice_card" value="es" name="language" selected="{% if LANGUAGE_CODE == 'es' %}True{% endif %}" title="Spanish" / %}
-                        {% component "choice_card" href="{% url 'languages' %}" title="Italian" / %}
-                        {% component "choice_card" href="{% url 'languages' %}" title="Other" / %}
+                        {% component "choice_card" value="es" name="language" selected="{% if LANGUAGE_CODE == 'es' %}True{% endif %}" title=spanish_label / %}
+                        {% component "choice_card" href="{% url 'languages' %}" title=italian_label / %}
+                        {% component "choice_card" href="{% url 'languages' %}" title=other_label / %}
                     {% endcomponent %}
                 </form>
             {% endcomponent %}
 
             {% component "grid" variant="preferences" %}
                 {% component "surface" kind="panel" %}
-                    {% component "heading" title="Text size" support="Use larger text if you want easier reading." / %}
+                    {% component "heading" title=textsize_title support=textsize_support / %}
 
-                    {% component "segment_control" label="Text size choices" %}
+                    {% component "segment_control" label=textsize_choices_label %}
                         <button type="button" data-ui="segment" data-font-size="small" onclick="changeFontSize('small')" aria-pressed="false" aria-label="{% trans 'Small text' %}">A</button>
                         <button type="button" data-ui="segment" data-font-size="medium" onclick="changeFontSize('medium')" aria-pressed="true" aria-label="{% trans 'Medium text' %}">A</button>
                         <button type="button" data-ui="segment" data-scale="large" data-font-size="extra-large" onclick="changeFontSize('extra-large')" aria-pressed="false" aria-label="{% trans 'Large text' %}">A</button>
                     {% endcomponent %}
 
                     {% component "stack" gap="0.5rem" %}
-                        {% component "heading" title="Audio mode" support="Turn on voice-friendly guidance." compact=True / %}
-                        {% component "toggle_switch" label_on="On" label_off="Off" id="audioToggle" onclick="toggleAudioMode()" / %}
+                        {% component "heading" title=audio_title support=audio_support compact=True / %}
+                        {% component "toggle_switch" label_on=on_label label_off=off_label id="audioToggle" onclick="toggleAudioMode()" / %}
                     {% endcomponent %}
                 {% endcomponent %}
 
                 {% component "surface" kind="panel" %}
-                    {% component "heading" title="Themes / colors" support="Preview a few high-contrast-friendly looks." / %}
+                    {% component "heading" title=themes_title support=themes_support / %}
                     {% component "grid" variant="themes" %}
-                        {% component "choice_card" tone="dawn" type="button" onclick="changeTheme('dawn')" data-ui="theme" data-theme-choice="dawn" %}
+                        {% component "choice_card" tone="dawn" type="button" onclick="changeTheme('dawn')" data_ui="theme" data_theme_choice="dawn" %}
                             <div data-theme-sample>
                                 <span class="theme-label">{% trans "Words" %}</span>
                             </div>
                         {% endcomponent %}
-                        {% component "choice_card" tone="sand" type="button" onclick="changeTheme('sand')" data-ui="theme" data-theme-choice="sand" %}
+                        {% component "choice_card" tone="sand" type="button" onclick="changeTheme('sand')" data_ui="theme" data_theme_choice="sand" %}
                             <div data-theme-sample>
                                 <span class="theme-label">{% trans "Words" %}</span>
                             </div>
                         {% endcomponent %}
-                        {% component "choice_card" tone="night" type="button" onclick="changeTheme('night')" data-ui="theme" data-theme-choice="night" %}
+                        {% component "choice_card" tone="night" type="button" onclick="changeTheme('night')" data_ui="theme" data_theme_choice="night" %}
                             <div data-theme-sample>
                                 <span class="theme-label">{% trans "Words" %}</span>
                             </div>
                         {% endcomponent %}
                         {% component "choice_card" href="{% url 'themes' %}" tone="ghost" %}
                             <div data-theme-sample>+</div>
-                            <span class="theme-label">More themes</span>
+                            <span class="theme-label">{% trans "More themes" %}</span>
                         {% endcomponent %}
                     {% endcomponent %}
                 {% endcomponent %}

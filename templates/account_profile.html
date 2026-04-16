@@ -4,10 +4,15 @@
 {% block title %}{{ account.name }} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Back to postings" as back_label %}
+{% trans "Profile & settings" as profile_label %}
+{% trans "Active postings" as active_title %}
+{% trans "Current jobs or availability shared from this account." as active_support %}
+
 {% component "shell" layout="content" %}
     {% fill "sidebar" %}
-        {% component "button_tile" label="Back to postings" href="{% url 'postings' %}" / %}
-        {% component "button_tile" label="Profile & settings" href="{% url 'profile_settings' %}" / %}
+        {% component "button_tile" label=back_label href="{% url 'postings' %}" / %}
+        {% component "button_tile" label=profile_label href="{% url 'profile_settings' %}" / %}
     {% endfill %}
 
     {% fill "default" %}
@@ -18,7 +23,7 @@
             {% endcomponent %}
 
             {% component "surface" kind="panel" %}
-                {% component "heading" title="Active postings" support="Current jobs or availability shared from this account." / %}
+                {% component "heading" title=active_title support=active_support / %}
 
                 {% component "grid" variant="postings" %}
                     {% for posting in account_postings %}

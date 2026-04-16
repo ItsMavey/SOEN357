@@ -787,6 +787,18 @@ msgstr "Nuit"
 msgid "Done"
 msgstr "Termine"
 
+msgid "Language choice / Choix de langue"
+msgstr "Choix de langue"
+
+msgid "Choose the language, text size, sound support, and theme that feel right for you."
+msgstr "Choisissez la langue, la taille du texte, l'assistance audio et le theme qui vous conviennent."
+
+msgid "Describe the property, timing, and any extra requirements for the worker."
+msgstr "Decrivez la propriete, l'horaire et toute exigence supplementaire pour le travailleur."
+
+msgid "Continue to property form"
+msgstr "Continuer vers le formulaire de propriete"
+
 #~ msgid "Login is coming next"
 #~ msgstr "La connexion arrive ensuite"
 

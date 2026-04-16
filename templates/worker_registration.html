@@ -4,16 +4,34 @@
 {% block title %}{% trans "Shoveller registration" %} | Bing Chilling{% endblock %}
 
 {% block content %}
+{% trans "Skip for now" as skip_label %}
+{% trans "Setup later" as setup_later_label %}
+{% trans "Account" as account_label %}
+{% trans "Login" as login_label %}
+{% trans "Worker service area" as worker_area_title %}
+{% trans "Set the travel rules and weekly availability you want clients to see." as worker_area_support %}
+{% trans "Address" as address_label %}
+{% trans "123 Example Street" as address_placeholder %}
+{% trans "Range (km)" as range_label %}
+{% trans "Max commute time" as commute_label %}
+{% trans "30 minutes" as commute_placeholder %}
+{% trans "Available hours (optional)" as hours_title %}
+{% trans "Mark when at least two hours of work would fit your schedule." as hours_support %}
+{% trans "Done" as done_label %}
+{% trans "Go to content" as go_content_label %}
+{% url 'postings' as postings_href %}
+{% url 'login' as login_href %}
+
 {% component "shell" layout="page" %}
     {% fill "rail_left" %}
-        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Skip for now" title="Setup later" tone="secondary" / %}
-        {% component "rail_link" url="{% url 'login' %}" eyebrow="Account" title="Login" / %}
+        {% component "rail_link" url=postings_href eyebrow=skip_label title=setup_later_label tone="secondary" / %}
+        {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
     {% endfill %}
 
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="panel" flow="spacious" %}
-                {% component "heading" title="Worker service area" support="Set the travel rules and weekly availability you want clients to see." level=1 / %}
+                {% component "heading" title=worker_area_title support=worker_area_support level=1 / %}
 
                 <div class="stack" style="--stack-gap: 1.2rem;">
                     <label class="toggle-row">
@@ -21,18 +39,18 @@
                         <span>{% trans "Near my address" %}</span>
                     </label>
                     {% component "grid" variant="double" %}
-                        {% component "text_field" label="Address" placeholder="123 Example Street" / %}
-                        {% component "text_field" label="Range (km)" type="number" placeholder="8" / %}
+                        {% component "text_field" label=address_label placeholder=address_placeholder / %}
+                        {% component "text_field" label=range_label type="number" placeholder="8" / %}
                     {% endcomponent %}
 
                     <label class="toggle-row">
                         <input type="checkbox">
                         <span>{% trans "Near public transport" %}</span>
                     </label>
-                    {% component "text_field" label="Max commute time" placeholder="30 minutes" / %}
+                    {% component "text_field" label=commute_label placeholder=commute_placeholder / %}
                 </div>
 
-                {% component "heading" title="Available hours (optional)" support="Mark when at least two hours of work would fit your schedule." compact=True / %}
+                {% component "heading" title=hours_title support=hours_support compact=True / %}
 
                 <div class="availability-table" role="table" aria-label="{% trans 'Weekly availability' %}">
                     <div class="table-head">{% trans "Time" %}</div>
@@ -69,7 +87,7 @@
     {% endfill %}
 
     {% fill "rail_right" %}
-        {% component "rail_link" url="{% url 'postings' %}" eyebrow="Done" title="Go to content" tone="primary" arrow=True stretch=True / %}
+        {% component "rail_link" url=postings_href eyebrow=done_label title=go_content_label tone="primary" arrow=True stretch=True / %}
     {% endfill %}
 {% endcomponent %}
 {% endblock %}
