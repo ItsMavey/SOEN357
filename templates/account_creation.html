@@ -32,41 +32,59 @@
 {% component "shell" layout="page" %}
     {% fill "rail_left" %}
         {% component "rail_link" url=postings_href eyebrow=skip_label title=setup_later_label tone="secondary" / %}
-        {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
+        {% if request.user.is_authenticated %}
+            {% trans "Logout" as logout_label %}
+            {% url 'logout' as logout_href %}
+            {% component "rail_link" url=logout_href eyebrow=account_label title=logout_label / %}
+        {% else %}
+            {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
+        {% endif %}
     {% endfill %}
 
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="panel" flow="spacious" %}
-                {% component "heading" title=create_title support=create_support level=1 / %}
-
-                {% if form_errors %}
-                <div class="form-error" role="alert">
-                    {% for error in form_errors %}
-                        <strong>{{ error }}</strong><br>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <form method="post" id="signupForm">
-                    {% csrf_token %}
-                    <input type="hidden" name="role" id="roleInput" value="{{ form_role|default:'worker' }}">
-
-                    {% component "grid" variant="roles" %}
-                        {% component "choice_card" title=shovel_title support=worker_label selected=True type="button" data_role="worker" data_ui="role-choice" / %}
-                        {% component "choice_card" title=client_title support=client_label type="button" data_role="client" data_ui="role-choice" / %}
-                    {% endcomponent %}
-
-                    <div class="stack" style="--stack-gap: 1rem;">
-                        {% component "text_field" label=username_label name="username" placeholder=username_placeholder value=form_username required=True / %}
-                        {% component "text_field" label=email_label name="email" type="email" placeholder="example@mail.com" value=form_email required=True / %}
-                        {% component "text_field" label=phone_label name="phone" type="tel" placeholder="1 514 123 4567" value=form_phone / %}
-                        {% component "text_field" label=password_label name="password" type="password" placeholder=password_placeholder required=True / %}
-                        {% component "text_field" label=repeat_password_label name="password_confirm" type="password" placeholder=repeat_placeholder required=True / %}
-
-                        {% component "button" label=create_btn_label type="submit" / %}
+                {% if request.user.is_authenticated %}
+                    {% trans "Your profile" as profile_title %}
+                    {% component "heading" title=profile_title support=request.user.email level=1 / %}
+                    <div class="stack" style="--stack-gap: 1rem; margin-top: 1rem;">
+                        <p><strong>{% trans "Username" %}:</strong> {{ request.user.username }}</p>
+                        <p><strong>{% trans "Role" %}:</strong> {{ request.user.profile.get_role_display }}</p>
+                        {% if request.user.profile.area %}
+                            <p><strong>{% trans "Area" %}:</strong> {{ request.user.profile.area }}</p>
+                        {% endif %}
                     </div>
-                </form>
+                {% else %}
+                    {% component "heading" title=create_title support=create_support level=1 / %}
+
+                    {% if form_errors %}
+                    <div class="form-error" role="alert">
+                        {% for error in form_errors %}
+                            <strong>{{ error }}</strong><br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" id="signupForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="role" id="roleInput" value="{{ form_role|default:'worker' }}">
+
+                        {% component "grid" variant="roles" %}
+                            {% component "choice_card" title=shovel_title support=worker_label selected=True type="button" data_role="worker" data_ui="role-choice" / %}
+                            {% component "choice_card" title=client_title support=client_label type="button" data_role="client" data_ui="role-choice" / %}
+                        {% endcomponent %}
+
+                        <div class="stack" style="--stack-gap: 1rem;">
+                            {% component "text_field" label=username_label name="username" placeholder=username_placeholder value=form_username required=True / %}
+                            {% component "text_field" label=email_label name="email" type="email" placeholder="example@mail.com" value=form_email required=True / %}
+                            {% component "text_field" label=phone_label name="phone" type="tel" placeholder="1 514 123 4567" value=form_phone / %}
+                            {% component "text_field" label=password_label name="password" type="password" placeholder=password_placeholder required=True / %}
+                            {% component "text_field" label=repeat_password_label name="password_confirm" type="password" placeholder=repeat_placeholder required=True / %}
+
+                            {% component "button" label=create_btn_label type="submit" / %}
+                        </div>
+                    </form>
+                {% endif %}
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}

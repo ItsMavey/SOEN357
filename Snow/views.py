@@ -141,7 +141,7 @@ class WorkerRegistrationView(NavContextMixin, TemplateView):
         if not request.user.is_authenticated:
             return redirect("login")
 
-        profile = request.user.profile
+        profile, _created = UserProfile.objects.get_or_create(user=request.user)
         profile.area = request.POST.get("address", "").strip()
         profile.badge = _("Transit-ready shoveller")
         profile.summary = (
@@ -205,6 +205,8 @@ class PropertyFormView(NavContextMixin, TemplateView):
             _("New snow clearing post")
         )
 
+        profile, _created = UserProfile.objects.get_or_create(user=request.user)
+
         Posting.objects.create(
             title=title,
             kind=Posting.Kind.CLIENT_POST,
@@ -214,7 +216,7 @@ class PropertyFormView(NavContextMixin, TemplateView):
             summary=f"Areas: {', '.join(areas)}" if areas else "",
             details="; ".join(extras) if extras else "",
             areas=areas,
-            account=request.user.profile,
+            account=profile,
         )
         return redirect("postings")
 
@@ -418,9 +420,10 @@ class WorkProofUploadView(NavContextMixin, TemplateView):
         caption = request.POST.get("caption", "").strip()
 
         if photo_before and photo_after:
+            profile, _created = UserProfile.objects.get_or_create(user=request.user)
             proof = WorkProof.objects.create(
                 posting=posting,
-                worker=request.user.profile,
+                worker=profile,
                 photo_before=photo_before,
                 photo_after=photo_after,
                 caption=caption,

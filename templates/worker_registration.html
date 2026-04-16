@@ -26,7 +26,13 @@
 {% component "shell" layout="page" %}
     {% fill "rail_left" %}
         {% component "rail_link" url=postings_href eyebrow=skip_label title=setup_later_label tone="secondary" / %}
-        {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
+        {% if request.user.is_authenticated %}
+            {% trans "Logout" as logout_label %}
+            {% url 'logout' as logout_href %}
+            {% component "rail_link" url=logout_href eyebrow=account_label title=logout_label / %}
+        {% else %}
+            {% component "rail_link" url=login_href eyebrow=account_label title=login_label / %}
+        {% endif %}
     {% endfill %}
 
     {% fill "default" %}
