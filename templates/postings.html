@@ -7,12 +7,14 @@
 {% trans "Profile & settings" as profile_label %}
 {% trans "Make a post" as make_post_label %}
 {% trans "Filters" as filters_title %}
-{% trans "Price range" as price_label %}
-{% trans "$20 - $80" as price_placeholder %}
+{% trans "Min price" as price_min_label %}
+{% trans "Max price" as price_max_label %}
 {% trans "Start time" as start_label %}
 {% trans "End time" as end_label %}
 {% trans "Extra needs" as extra_label %}
 {% trans "Salt, urgent start, photo guide..." as extra_placeholder %}
+{% trans "Apply filters" as apply_label %}
+{% trans "Clear" as clear_label %}
 
 {% component "shell" layout="content" %}
     {% fill "sidebar" %}
@@ -20,23 +22,33 @@
         {% component "button_tile" label=make_post_label href="{% url 'property_form' %}" / %}
 
         {% component "surface" kind="panel" %}
-            {% component "form_group" title=filters_title %}
-                {% component "text_field" label=price_label placeholder=price_placeholder / %}
-                {% component "text_field" label=start_label type="time" / %}
-                {% component "text_field" label=end_label type="time" / %}
-                
-                <label class="text-field">
-                    <span class="text-field__label">{% trans "Area type" %}</span>
-                    <select class="text-field__input">
-                        <option>{% trans "Any area" %}</option>
-                        <option>{% trans "Entrance" %}</option>
-                        <option>{% trans "Stairs" %}</option>
-                        <option>{% trans "Garage" %}</option>
-                    </select>
-                </label>
+            <form method="get" action="{% url 'postings' %}">
+                {% component "form_group" title=filters_title %}
+                    {% component "text_field" label=price_min_label name="price_min" type="number" placeholder="20" value=filter_price_min / %}
+                    {% component "text_field" label=price_max_label name="price_max" type="number" placeholder="80" value=filter_price_max / %}
+                    {% component "text_field" label=start_label name="start_time" type="time" value=filter_start_time / %}
+                    {% component "text_field" label=end_label name="end_time" type="time" value=filter_end_time / %}
 
-                {% component "text_field" label=extra_label placeholder=extra_placeholder / %}
-            {% endcomponent %}
+                    <label class="text-field">
+                        <span class="text-field__label">{% trans "Area type" %}</span>
+                        <select class="text-field__input" name="area_type">
+                            <option value="" {% if not filter_area_type %}selected{% endif %}>{% trans "Any area" %}</option>
+                            <option value="Entrance" {% if filter_area_type == "Entrance" %}selected{% endif %}>{% trans "Entrance" %}</option>
+                            <option value="Stairs" {% if filter_area_type == "Stairs" %}selected{% endif %}>{% trans "Stairs" %}</option>
+                            <option value="Garage" {% if filter_area_type == "Garage" %}selected{% endif %}>{% trans "Garage" %}</option>
+                            <option value="Walkway" {% if filter_area_type == "Walkway" %}selected{% endif %}>{% trans "Walkway" %}</option>
+                            <option value="Driveway" {% if filter_area_type == "Driveway" %}selected{% endif %}>{% trans "Driveway" %}</option>
+                        </select>
+                    </label>
+
+                    {% component "text_field" label=extra_label name="extra" placeholder=extra_placeholder value=filter_extra / %}
+
+                    <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+                        {% component "button" label=apply_label type="submit" / %}
+                        {% component "button" label=clear_label href="{% url 'postings' %}" tone="ghost" / %}
+                    </div>
+                {% endcomponent %}
+            </form>
         {% endcomponent %}
     {% endfill %}
 
@@ -44,6 +56,10 @@
         {% component "grid" variant="postings" %}
             {% for posting in postings %}
                 {% component "posting_card" posting=posting / %}
+            {% empty %}
+                {% component "surface" kind="panel" %}
+                    {% component "heading" title="No postings found" support="Try adjusting your filters or check back later." / %}
+                {% endcomponent %}
             {% endfor %}
         {% endcomponent %}
     {% endfill %}

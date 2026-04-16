@@ -32,52 +32,55 @@
             {% component "surface" kind="panel" flow="spacious" %}
                 {% component "heading" title=form_title support=form_support level=1 / %}
 
-                {% component "grid" variant="property" %}
-                    {% component "stack" %}
-                        {% component "form_group" title=areas_title %}
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Entrance" %}</span></label>
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Stairs" %}</span></label>
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Garage" %}</span></label>
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Other" %}</span></label>
-                            {% component "text_field" label="" placeholder=areas_placeholder / %}
-                        {% endcomponent %}
-
-                        {% component "form_group" title=start_title %}
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "When snow stops" %}</span></label>
-                            {% component "text_field" label=start_label type="datetime-local" / %}
-                        {% endcomponent %}
-
-                        {% component "form_group" title=deadline_title %}
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Tomorrow" %}</span></label>
-                            {% component "text_field" label=deadline_label type="datetime-local" / %}
-                        {% endcomponent %}
-
-                        {% component "form_group" title=extras_title %}
-                            <label class="toggle-row"><input type="checkbox"> <span>{% trans "Spread salt or sand (must be provided on place)" %}</span></label>
-                            {% component "text_field" label=other_request_label placeholder=other_request_placeholder / %}
-                        {% endcomponent %}
-                    {% endcomponent %}
-
-                    {% component "stack" %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% component "grid" variant="property" %}
                         {% component "stack" %}
-                            {% component "text_field" label=pay_label type="number" placeholder="40" / %}
-                            {% component "text_field" label=address_label placeholder=address_placeholder / %}
+                            {% component "form_group" title=areas_title %}
+                                <label class="toggle-row"><input type="checkbox" name="area_entrance" value="1"> <span>{% trans "Entrance" %}</span></label>
+                                <label class="toggle-row"><input type="checkbox" name="area_stairs" value="1"> <span>{% trans "Stairs" %}</span></label>
+                                <label class="toggle-row"><input type="checkbox" name="area_garage" value="1"> <span>{% trans "Garage" %}</span></label>
+                                <label class="toggle-row"><input type="checkbox" name="area_other" value="1"> <span>{% trans "Other" %}</span></label>
+                                {% component "text_field" label="" name="areas_custom" placeholder=areas_placeholder / %}
+                            {% endcomponent %}
+
+                            {% component "form_group" title=start_title %}
+                                <label class="toggle-row"><input type="checkbox" name="when_snow_stops" value="1"> <span>{% trans "When snow stops" %}</span></label>
+                                {% component "text_field" label=start_label name="start_time" type="datetime-local" / %}
+                            {% endcomponent %}
+
+                            {% component "form_group" title=deadline_title %}
+                                <label class="toggle-row"><input type="checkbox" name="tomorrow" value="1"> <span>{% trans "Tomorrow" %}</span></label>
+                                {% component "text_field" label=deadline_label name="deadline" type="datetime-local" / %}
+                            {% endcomponent %}
+
+                            {% component "form_group" title=extras_title %}
+                                <label class="toggle-row"><input type="checkbox" name="salt" value="1"> <span>{% trans "Spread salt or sand (must be provided on place)" %}</span></label>
+                                {% component "text_field" label=other_request_label name="other_request" placeholder=other_request_placeholder / %}
+                            {% endcomponent %}
                         {% endcomponent %}
 
-                        {% component "form_group" title=upload_property_title %}
-                            {% component "upload_field" label=choose_file_label / %}
-                        {% endcomponent %}
+                        {% component "stack" %}
+                            {% component "stack" %}
+                                {% component "text_field" label=pay_label name="pay" type="number" placeholder="40" / %}
+                                {% component "text_field" label=address_label name="address" placeholder=address_placeholder required=True / %}
+                            {% endcomponent %}
 
-                        {% component "form_group" title=upload_snow_title %}
-                            {% component "upload_field" label=choose_file_label / %}
+                            {% component "form_group" title=upload_property_title %}
+                                {% component "upload_field" label=choose_file_label / %}
+                            {% endcomponent %}
+
+                            {% component "form_group" title=upload_snow_title %}
+                                {% component "upload_field" label=choose_file_label / %}
+                            {% endcomponent %}
                         {% endcomponent %}
                     {% endcomponent %}
-                {% endcomponent %}
 
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    {% component "button" label=save_label href="{% url 'postings' %}" tone="ghost" / %}
-                    {% component "button" label=post_label href="{% url 'postings' %}" / %}
-                </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        {% component "button" label=save_label href="{% url 'postings' %}" tone="ghost" / %}
+                        {% component "button" label=post_label type="submit" / %}
+                    </div>
+                </form>
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}

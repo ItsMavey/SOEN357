@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %} | Bing Chilling{% endblock %}
+
+{% block content %}
+{% trans "Account" as account_label %}
+{% trans "Login" as login_title %}
+{% trans "Enter your credentials to access your dashboard." as login_support %}
+{% trans "Username" as username_label %}
+{% trans "Your username" as username_placeholder %}
+{% trans "Password" as password_label %}
+{% trans "Your password" as password_placeholder %}
+{% trans "Sign in" as signin_label %}
+{% trans "Don't have an account?" as no_account_label %}
+{% trans "Create one" as create_label %}
+{% trans "Skip for now" as skip_label %}
+{% trans "Browse postings" as browse_label %}
+{% url 'signup' as signup_href %}
+{% url 'postings' as postings_href %}
+
+{% component "shell" layout="page" %}
+    {% fill "rail_left" %}
+        {% component "rail_link" url=postings_href eyebrow=skip_label title=browse_label tone="secondary" / %}
+        {% component "rail_link" url=signup_href eyebrow=no_account_label title=create_label / %}
+    {% endfill %}
+
+    {% fill "default" %}
+        {% component "stack" %}
+            {% component "surface" kind="panel" flow="spacious" %}
+                {% component "heading" eyebrow=account_label title=login_title support=login_support level=1 / %}
+
+                {% if form_error %}
+                <div class="form-error" role="alert">
+                    <strong>{{ form_error }}</strong>
+                </div>
+                {% endif %}
+
+                <form method="post" class="stack" style="--stack-gap: 1rem;">
+                    {% csrf_token %}
+                    {% component "text_field" label=username_label name="username" placeholder=username_placeholder value=form_username required=True / %}
+                    {% component "text_field" label=password_label name="password" type="password" placeholder=password_placeholder required=True / %}
+
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        {% component "button" label=signin_label type="submit" / %}
+                        {% component "button" label=create_label href=signup_href tone="ghost" / %}
+                    </div>
+                </form>
+            {% endcomponent %}
+        {% endcomponent %}
+    {% endfill %}
+{% endcomponent %}
+{% endblock %}

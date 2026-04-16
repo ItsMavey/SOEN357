@@ -159,3 +159,64 @@ button {
 .availability-table > *:nth-child(8n) {
     border-right: 0;
 }
+
+/* Form error messages */
+.form-error {
+    padding: 1rem 1.4rem;
+    background: #fff0f0;
+    border: 2px solid #e74c3c;
+    border-radius: 1rem;
+    color: #c0392b;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+[data-theme="night"] .form-error {
+    background: #2a1520;
+    border-color: #e74c3c;
+    color: #ff8a80;
+}
+
+/* Posting detail status badges */
+.posting-detail__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+}
+
+.posting-detail__status--open {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.posting-detail__status--progress {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffc107;
+}
+
+.posting-detail__status--completed {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #a3d9b1;
+}
+
+[data-theme="night"] .posting-detail__status--progress {
+    background: #3a3520;
+    color: #ffd95c;
+    border-color: #7a6a20;
+}
+
+[data-theme="night"] .posting-detail__status--completed {
+    background: #1a3a2a;
+    color: #78e0a0;
+    border-color: #2d6b45;
+}

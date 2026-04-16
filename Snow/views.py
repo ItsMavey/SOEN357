@@ -1,124 +1,20 @@
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.http import Http404
+from django.shortcuts import redirect
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
+from .models import EXIFMetadata, Posting, UserProfile, WorkProof
 
-def get_accounts():
-    return {
-        "maya-chen": {
-            "slug": "maya-chen",
-            "name": "Maya Chen",
-            "role": _("Client"),
-            "badge": _("Verified homeowner"),
-            "area": _("Notre-Dame-de-Grace"),
-            "summary": _(
-                "Posts clear scope, photo references, and flexible evening pickup windows."
-            ),
-        },
-        "samir-bensaid": {
-            "slug": "samir-bensaid",
-            "name": "Samir Ben Said",
-            "role": _("Worker"),
-            "badge": _("Transit-ready shoveller"),
-            "area": _("Verdun"),
-            "summary": _(
-                "Takes on duplex entrances and stair-heavy jobs within a 30-minute commute."
-            ),
-        },
-        "camille-roy": {
-            "slug": "camille-roy",
-            "name": "Camille Roy",
-            "role": _("Client"),
-            "badge": _("Repeat poster"),
-            "area": _("LaSalle"),
-            "summary": _(
-                "Usually posts morning jobs with driveway photos and same-day payment."
-            ),
-        },
-        "alejandro-torres": {
-            "slug": "alejandro-torres",
-            "name": "Alejandro Torres",
-            "role": _("Worker"),
-            "badge": _("Weekend availability"),
-            "area": _("Cote-des-Neiges"),
-            "summary": _(
-                "Prefers weekend work near metro stops and can bring his own salt spreader."
-            ),
-        },
-    }
+User = get_user_model()
 
 
-def get_postings():
-    accounts = get_accounts()
-    postings = [
-        {
-            "slug": "ndg-front-steps",
-            "title": _("NDG duplex needs front steps and walkway cleared"),
-            "kind": _("Client post"),
-            "budget": "$55",
-            "window": _("Tonight after 7:00 PM"),
-            "location": _("Notre-Dame-de-Grace"),
-            "summary": _(
-                "Front stairs, short walkway, and one parking strip after the snowfall slows down."
-            ),
-            "details": _(
-                "Salt is already on site. The client added pictures and can message door access notes before arrival."
-            ),
-            "areas": [_("Front steps"), _("Walkway"), _("Parking strip")],
-            "account": accounts["maya-chen"],
-        },
-        {
-            "slug": "verdun-evening-route",
-            "title": _("Verdun evening shoveller taking jobs near Jolicoeur"),
-            "kind": _("Worker profile"),
-            "budget": _("From $40 per visit"),
-            "window": _("Available 6:30 PM to 10:30 PM"),
-            "location": _("Verdun"),
-            "summary": _(
-                "Best fit for entrances, duplex stairs, and compact driveways within transit range."
-            ),
-            "details": _(
-                "Samir can reach most jobs by bus and metro, and he is comfortable handling repeat bookings after storms."
-            ),
-            "areas": [_("Entrance"), _("Stairs"), _("Compact driveway")],
-            "account": accounts["samir-bensaid"],
-        },
-        {
-            "slug": "lasalle-morning-driveway",
-            "title": _("LaSalle driveway and side path needed before 9:00 AM"),
-            "kind": _("Client post"),
-            "budget": "$70",
-            "window": _("Tomorrow before 9:00 AM"),
-            "location": _("LaSalle"),
-            "summary": _(
-                "Two-car driveway, side path to the bins, and light salting if the worker can do it."
-            ),
-            "details": _(
-                "The account usually posts with photo guides and pays right after the work is marked complete."
-            ),
-            "areas": [_("Driveway"), _("Side path"), _("Bins access")],
-            "account": accounts["camille-roy"],
-        },
-        {
-            "slug": "cdn-weekend-worker",
-            "title": _("Weekend worker covering snow clearing near Snowdon"),
-            "kind": _("Worker profile"),
-            "budget": _("From $45 per visit"),
-            "window": _("Friday to Sunday"),
-            "location": _("Cote-des-Neiges"),
-            "summary": _(
-                "Open to morning or late-night jobs, especially homes close to metro stations."
-            ),
-            "details": _(
-                "Alejandro brings his own shovel kit and is open to recurring service for the same address."
-            ),
-            "areas": [_("Entrance"), _("Walkway"), _("Salt spread")],
-            "account": accounts["alejandro-torres"],
-        },
-    ]
-
-    return postings
-
+# ---------------------------------------------------------------------------
+# Shared mixin
+# ---------------------------------------------------------------------------
 
 class NavContextMixin:
     nav_brand = "Bing Chilling"
@@ -131,39 +27,201 @@ class NavContextMixin:
         return context
 
 
+# ---------------------------------------------------------------------------
+# Home
+# ---------------------------------------------------------------------------
+
 class HomeView(NavContextMixin, TemplateView):
     template_name = "home.html"
     nav_page_title = _("Neighbours shovelling services")
 
 
-class LoginView(NavContextMixin, TemplateView):
-    template_name = "info_page.html"
-    nav_page_title = _("Login")
-    extra_context = {
-        "page_eyebrow": _("Account"),
-        "page_title": _("Login"),
-        "page_description": _(
-            "Returning users will be able to access their dashboard, saved preferences, and active posts from here."
-        ),
-        "primary_url_name": "postings",
-        "primary_label": _("Go to postings"),
-    }
+# ---------------------------------------------------------------------------
+# Auth — Login
+# ---------------------------------------------------------------------------
 
+class LoginView(NavContextMixin, TemplateView):
+    template_name = "login.html"
+    nav_page_title = _("Login")
+
+    def post(self, request, *args, **kwargs):
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth_login(request, user)
+            return redirect("postings")
+
+        context = self.get_context_data()
+        context["form_error"] = _("Invalid username or password.")
+        context["form_username"] = username
+        return self.render_to_response(context)
+
+
+# ---------------------------------------------------------------------------
+# Auth — Signup
+# ---------------------------------------------------------------------------
 
 class SignupView(NavContextMixin, TemplateView):
     template_name = "account_creation.html"
     nav_page_title = _("Account creation")
 
+    def post(self, request, *args, **kwargs):
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        phone = request.POST.get("phone", "").strip()
+        password = request.POST.get("password", "")
+        password_confirm = request.POST.get("password_confirm", "")
+        role = request.POST.get("role", "worker")
+
+        errors = []
+
+        if not username:
+            errors.append(_("Username is required."))
+        if not email:
+            errors.append(_("Email is required."))
+        if not password:
+            errors.append(_("Password is required."))
+        if password != password_confirm:
+            errors.append(_("Passwords do not match."))
+        if User.objects.filter(username=username).exists():
+            errors.append(_("That username is already taken."))
+
+        if errors:
+            context = self.get_context_data()
+            context["form_errors"] = errors
+            context["form_username"] = username
+            context["form_email"] = email
+            context["form_phone"] = phone
+            context["form_role"] = role
+            return self.render_to_response(context)
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+        profile_role = (
+            UserProfile.Role.WORKER if role == "worker" else UserProfile.Role.CLIENT
+        )
+        UserProfile.objects.create(
+            user=user,
+            slug=slugify(username),
+            role=profile_role,
+        )
+        auth_login(request, user)
+
+        if profile_role == UserProfile.Role.WORKER:
+            return redirect("worker_registration")
+        return redirect("property_form")
+
+
+# ---------------------------------------------------------------------------
+# Auth — Logout
+# ---------------------------------------------------------------------------
+
+class LogoutView(NavContextMixin, TemplateView):
+    template_name = "home.html"
+
+    def get(self, request, *args, **kwargs):
+        auth_logout(request)
+        return redirect("home")
+
+
+# ---------------------------------------------------------------------------
+# Worker registration
+# ---------------------------------------------------------------------------
 
 class WorkerRegistrationView(NavContextMixin, TemplateView):
     template_name = "worker_registration.html"
     nav_page_title = _("Shoveller registration")
 
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        profile = request.user.profile
+        profile.area = request.POST.get("address", "").strip()
+        profile.badge = _("Transit-ready shoveller")
+        profile.summary = (
+            f"Range: {request.POST.get('range_km', '')} km, "
+            f"Max commute: {request.POST.get('commute', '')}"
+        )
+        profile.save()
+        return redirect("postings")
+
+
+# ---------------------------------------------------------------------------
+# Property form — create a posting
+# ---------------------------------------------------------------------------
 
 class PropertyFormView(NavContextMixin, TemplateView):
     template_name = "property_form.html"
     nav_page_title = _("New property form")
 
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        # Collect area checkboxes
+        areas = []
+        for area_name in ["entrance", "stairs", "garage", "other"]:
+            if request.POST.get(f"area_{area_name}"):
+                areas.append(area_name.capitalize())
+        custom_areas = request.POST.get("areas_custom", "").strip()
+        if custom_areas:
+            areas.extend([a.strip() for a in custom_areas.split(",") if a.strip()])
+
+        # Collect extras
+        extras = []
+        if request.POST.get("salt"):
+            extras.append("Spread salt or sand")
+        other_request = request.POST.get("other_request", "").strip()
+        if other_request:
+            extras.append(other_request)
+
+        # Timing
+        start_time = request.POST.get("start_time", "")
+        deadline = request.POST.get("deadline", "")
+        when_snow_stops = request.POST.get("when_snow_stops", "")
+        tomorrow = request.POST.get("tomorrow", "")
+
+        window_parts = []
+        if when_snow_stops:
+            window_parts.append(str(_("When snow stops")))
+        if start_time:
+            window_parts.append(f"Start: {start_time}")
+        if tomorrow:
+            window_parts.append(str(_("Deadline: Tomorrow")))
+        if deadline:
+            window_parts.append(f"Deadline: {deadline}")
+        window = ", ".join(window_parts) if window_parts else str(_("Flexible"))
+
+        pay = request.POST.get("pay", "").strip()
+        address = request.POST.get("address", "").strip()
+
+        title = f"Snow clearing at {address}" if address else str(
+            _("New snow clearing post")
+        )
+
+        Posting.objects.create(
+            title=title,
+            kind=Posting.Kind.CLIENT_POST,
+            budget=f"${pay}" if pay else str(_("Negotiable")),
+            window=window,
+            location=address or str(_("Not specified")),
+            summary=f"Areas: {', '.join(areas)}" if areas else "",
+            details="; ".join(extras) if extras else "",
+            areas=areas,
+            account=request.user.profile,
+        )
+        return redirect("postings")
+
+
+# ---------------------------------------------------------------------------
+# Postings list — with filtering
+# ---------------------------------------------------------------------------
 
 class PostingsView(NavContextMixin, TemplateView):
     template_name = "postings.html"
@@ -171,9 +229,60 @@ class PostingsView(NavContextMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["postings"] = get_postings()
+        qs = Posting.objects.select_related("account__user").order_by("-created_at")
+
+        # --- GET-param filtering ---
+        params = self.request.GET
+
+        price_min = params.get("price_min", "").strip()
+        price_max = params.get("price_max", "").strip()
+        start_time = params.get("start_time", "").strip()
+        end_time = params.get("end_time", "").strip()
+        area_type = params.get("area_type", "").strip()
+        extra = params.get("extra", "").strip()
+
+        if price_min:
+            try:
+                min_val = int(price_min)
+                # Filter out postings whose numeric budget is below min
+                exclude_ids = []
+                for p in qs:
+                    numeric = "".join(c for c in p.budget if c.isdigit())
+                    if numeric and int(numeric) < min_val:
+                        exclude_ids.append(p.pk)
+                qs = qs.exclude(pk__in=exclude_ids)
+            except ValueError:
+                pass
+        if price_max:
+            try:
+                max_val = int(price_max)
+                exclude_ids = []
+                for p in qs:
+                    numeric = "".join(c for c in p.budget if c.isdigit())
+                    if numeric and int(numeric) > max_val:
+                        exclude_ids.append(p.pk)
+                qs = qs.exclude(pk__in=exclude_ids)
+            except ValueError:
+                pass
+        if area_type and area_type != str(_("Any area")):
+            # Use icontains on the text representation for SQLite compat
+            qs = qs.filter(areas__icontains=area_type)
+        if extra:
+            qs = qs.filter(details__icontains=extra)
+
+        context["postings"] = qs
+        context["filter_price_min"] = price_min
+        context["filter_price_max"] = price_max
+        context["filter_start_time"] = start_time
+        context["filter_end_time"] = end_time
+        context["filter_area_type"] = area_type
+        context["filter_extra"] = extra
         return context
 
+
+# ---------------------------------------------------------------------------
+# Posting detail
+# ---------------------------------------------------------------------------
 
 class PostingDetailView(NavContextMixin, TemplateView):
     template_name = "posting_detail.html"
@@ -181,17 +290,25 @@ class PostingDetailView(NavContextMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        posting = next(
-            (item for item in get_postings() if item["slug"] == self.kwargs["slug"]),
-            None,
-        )
-        if posting is None:
+        try:
+            posting = Posting.objects.select_related("account__user").get(
+                slug=self.kwargs["slug"]
+            )
+        except Posting.DoesNotExist:
             raise Http404(_("Posting not found."))
 
         context["posting"] = posting
-        context["nav_page_title"] = posting["title"]
+        context["nav_page_title"] = posting.title
+        context["work_proofs"] = posting.work_proofs.select_related("worker__user")
+
+        # Show upload form only if logged-in user is authenticated
+        context["can_upload_proof"] = self.request.user.is_authenticated
         return context
 
+
+# ---------------------------------------------------------------------------
+# Account detail
+# ---------------------------------------------------------------------------
 
 class AccountDetailView(NavContextMixin, TemplateView):
     template_name = "account_profile.html"
@@ -199,19 +316,26 @@ class AccountDetailView(NavContextMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        account = get_accounts().get(self.kwargs["slug"])
-        if account is None:
+        try:
+            account = UserProfile.objects.select_related("user").get(
+                slug=self.kwargs["slug"]
+            )
+        except UserProfile.DoesNotExist:
             raise Http404(_("Account not found."))
 
-        account_postings = [
-            item for item in get_postings() if item["account"]["slug"] == account["slug"]
-        ]
+        account_postings = Posting.objects.filter(account=account).order_by(
+            "-created_at"
+        )
 
         context["account"] = account
         context["account_postings"] = account_postings
-        context["nav_page_title"] = account["name"]
+        context["nav_page_title"] = account.user.get_full_name() or account.user.username
         return context
 
+
+# ---------------------------------------------------------------------------
+# Static info-page views
+# ---------------------------------------------------------------------------
 
 class ProfileSettingsView(NavContextMixin, TemplateView):
     template_name = "info_page.html"
@@ -253,3 +377,79 @@ class LanguagesView(NavContextMixin, TemplateView):
         "primary_url_name": "home",
         "primary_label": _("Back to preferences"),
     }
+
+
+# ---------------------------------------------------------------------------
+# Work proof upload (logged-in users)
+# ---------------------------------------------------------------------------
+
+class WorkProofUploadView(NavContextMixin, TemplateView):
+    template_name = "posting_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            posting = Posting.objects.select_related("account__user").get(
+                slug=self.kwargs["slug"]
+            )
+        except Posting.DoesNotExist:
+            raise Http404(_("Posting not found."))
+
+        context["posting"] = posting
+        context["nav_page_title"] = posting.title
+        context["work_proofs"] = posting.work_proofs.select_related("worker__user")
+        context["can_upload_proof"] = self.request.user.is_authenticated
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response(self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        try:
+            posting = Posting.objects.get(slug=self.kwargs["slug"])
+        except Posting.DoesNotExist:
+            raise Http404(_("Posting not found."))
+
+        photo_before = request.FILES.get("photo_before")
+        photo_after = request.FILES.get("photo_after")
+        caption = request.POST.get("caption", "").strip()
+
+        if photo_before and photo_after:
+            proof = WorkProof.objects.create(
+                posting=posting,
+                worker=request.user.profile,
+                photo_before=photo_before,
+                photo_after=photo_after,
+                caption=caption,
+            )
+            # Extract and persist EXIF metadata from both images
+            EXIFMetadata.extract_and_save(proof, "photo_before")
+            EXIFMetadata.extract_and_save(proof, "photo_after")
+
+        return redirect("posting_detail", slug=posting.slug)
+
+
+# ---------------------------------------------------------------------------
+# Mark posting as completed
+# ---------------------------------------------------------------------------
+
+class MarkCompletedView(NavContextMixin, TemplateView):
+    template_name = "posting_detail.html"
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        try:
+            posting = Posting.objects.get(slug=self.kwargs["slug"])
+        except Posting.DoesNotExist:
+            raise Http404(_("Posting not found."))
+
+        # Anyone authenticated can mark as done
+        posting.status = Posting.Status.COMPLETED
+        posting.save(update_fields=["status"])
+
+        return redirect("posting_detail", slug=posting.slug)

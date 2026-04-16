@@ -24,6 +24,7 @@
 {% trans "8-20 characters" as password_placeholder %}
 {% trans "Repeat password" as repeat_password_label %}
 {% trans "Repeat above" as repeat_placeholder %}
+{% trans "Create account" as create_btn_label %}
 {% url 'login' as login_href %}
 {% url 'postings' as postings_href %}
 {% url 'worker_registration' as worker_href %}
@@ -39,16 +40,32 @@
             {% component "surface" kind="panel" flow="spacious" %}
                 {% component "heading" title=create_title support=create_support level=1 / %}
 
-                {% component "grid" variant="roles" %}
-                    {% component "choice_card" title=shovel_title support=worker_label selected=True type="button" data_role="worker" data_ui="role-choice" / %}
-                    {% component "choice_card" title=client_title support=client_label type="button" data_role="client" data_ui="role-choice" / %}
-                {% endcomponent %}
-                <form class="stack" style="--stack-gap: 1rem;">
-                    {% component "text_field" label=username_label placeholder=username_placeholder / %}
-                    {% component "text_field" label=email_label type="email" placeholder="example@mail.com" / %}
-                    {% component "text_field" label=phone_label type="tel" placeholder="1 514 123 4567" / %}
-                    {% component "text_field" label=password_label type="password" placeholder=password_placeholder / %}
-                    {% component "text_field" label=repeat_password_label type="password" placeholder=repeat_placeholder / %}
+                {% if form_errors %}
+                <div class="form-error" role="alert">
+                    {% for error in form_errors %}
+                        <strong>{{ error }}</strong><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" id="signupForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="role" id="roleInput" value="{{ form_role|default:'worker' }}">
+
+                    {% component "grid" variant="roles" %}
+                        {% component "choice_card" title=shovel_title support=worker_label selected=True type="button" data_role="worker" data_ui="role-choice" / %}
+                        {% component "choice_card" title=client_title support=client_label type="button" data_role="client" data_ui="role-choice" / %}
+                    {% endcomponent %}
+
+                    <div class="stack" style="--stack-gap: 1rem;">
+                        {% component "text_field" label=username_label name="username" placeholder=username_placeholder value=form_username required=True / %}
+                        {% component "text_field" label=email_label name="email" type="email" placeholder="example@mail.com" value=form_email required=True / %}
+                        {% component "text_field" label=phone_label name="phone" type="tel" placeholder="1 514 123 4567" value=form_phone / %}
+                        {% component "text_field" label=password_label name="password" type="password" placeholder=password_placeholder required=True / %}
+                        {% component "text_field" label=repeat_password_label name="password_confirm" type="password" placeholder=repeat_placeholder required=True / %}
+
+                        {% component "button" label=create_btn_label type="submit" / %}
+                    </div>
                 </form>
             {% endcomponent %}
         {% endcomponent %}
@@ -63,9 +80,12 @@
 {% block extra_body %}
 <script>
     const roleButtons = document.querySelectorAll('[data-ui="role-choice"][data-role]');
+    const roleInput = document.getElementById('roleInput');
     const nextLink = document.getElementById('accountNextLink');
 
     function syncAccountRole(role) {
+        roleInput.value = role;
+
         roleButtons.forEach((button) => {
             button.toggleAttribute('data-state', button.dataset.role === role);
             button.classList.toggle('choice-card--selected', button.dataset.role === role);
@@ -88,6 +108,6 @@
     });
 
     // Initialize state
-    syncAccountRole('worker');
+    syncAccountRole(roleInput.value || 'worker');
 </script>
 {% endblock %}

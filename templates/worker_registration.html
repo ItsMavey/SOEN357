@@ -18,6 +18,7 @@
 {% trans "Available hours (optional)" as hours_title %}
 {% trans "Mark when at least two hours of work would fit your schedule." as hours_support %}
 {% trans "Done" as done_label %}
+{% trans "Save and continue" as save_label %}
 {% trans "Go to content" as go_content_label %}
 {% url 'postings' as postings_href %}
 {% url 'login' as login_href %}
@@ -33,55 +34,62 @@
             {% component "surface" kind="panel" flow="spacious" %}
                 {% component "heading" title=worker_area_title support=worker_area_support level=1 / %}
 
-                <div class="stack" style="--stack-gap: 1.2rem;">
-                    <label class="toggle-row">
-                        <input type="checkbox" checked>
-                        <span>{% trans "Near my address" %}</span>
-                    </label>
-                    {% component "grid" variant="double" %}
-                        {% component "text_field" label=address_label placeholder=address_placeholder / %}
-                        {% component "text_field" label=range_label type="number" placeholder="8" / %}
-                    {% endcomponent %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="stack" style="--stack-gap: 1.2rem;">
+                        <label class="toggle-row">
+                            <input type="checkbox" name="near_address" value="1" checked>
+                            <span>{% trans "Near my address" %}</span>
+                        </label>
+                        {% component "grid" variant="double" %}
+                            {% component "text_field" label=address_label name="address" placeholder=address_placeholder / %}
+                            {% component "text_field" label=range_label name="range_km" type="number" placeholder="8" / %}
+                        {% endcomponent %}
 
-                    <label class="toggle-row">
-                        <input type="checkbox">
-                        <span>{% trans "Near public transport" %}</span>
-                    </label>
-                    {% component "text_field" label=commute_label placeholder=commute_placeholder / %}
-                </div>
+                        <label class="toggle-row">
+                            <input type="checkbox" name="near_transit" value="1">
+                            <span>{% trans "Near public transport" %}</span>
+                        </label>
+                        {% component "text_field" label=commute_label name="commute" placeholder=commute_placeholder / %}
+                    </div>
 
-                {% component "heading" title=hours_title support=hours_support compact=True / %}
+                    {% component "heading" title=hours_title support=hours_support compact=True / %}
 
-                <div class="availability-table" role="table" aria-label="{% trans 'Weekly availability' %}">
-                    <div class="table-head">{% trans "Time" %}</div>
-                    <div class="table-head">{% trans "Mon" %}</div>
-                    <div class="table-head">{% trans "Tue" %}</div>
-                    <div class="table-head">{% trans "Wed" %}</div>
-                    <div class="table-head">{% trans "Thu" %}</div>
-                    <div class="table-head">{% trans "Fri" %}</div>
-                    <div class="table-head">{% trans "Sat" %}</div>
-                    <div class="table-head">{% trans "Sun" %}</div>
+                    <div class="availability-table" role="table" aria-label="{% trans 'Weekly availability' %}">
+                        <div class="table-head">{% trans "Time" %}</div>
+                        <div class="table-head">{% trans "Mon" %}</div>
+                        <div class="table-head">{% trans "Tue" %}</div>
+                        <div class="table-head">{% trans "Wed" %}</div>
+                        <div class="table-head">{% trans "Thu" %}</div>
+                        <div class="table-head">{% trans "Fri" %}</div>
+                        <div class="table-head">{% trans "Sat" %}</div>
+                        <div class="table-head">{% trans "Sun" %}</div>
 
-                    <div class="table-label">{% trans "Morning" %}</div>
-                    {% for _ in "1234567" %}
-                        <label class="table-cell"><input type="checkbox"><span></span></label>
-                    {% endfor %}
+                        <div class="table-label">{% trans "Morning" %}</div>
+                        {% for _ in "1234567" %}
+                            <label class="table-cell"><input type="checkbox" name="morning_{{ forloop.counter }}"><span></span></label>
+                        {% endfor %}
 
-                    <div class="table-label">{% trans "Afternoon" %}</div>
-                    {% for _ in "1234567" %}
-                        <label class="table-cell"><input type="checkbox"><span></span></label>
-                    {% endfor %}
+                        <div class="table-label">{% trans "Afternoon" %}</div>
+                        {% for _ in "1234567" %}
+                            <label class="table-cell"><input type="checkbox" name="afternoon_{{ forloop.counter }}"><span></span></label>
+                        {% endfor %}
 
-                    <div class="table-label">{% trans "Evening" %}</div>
-                    {% for _ in "1234567" %}
-                        <label class="table-cell"><input type="checkbox"><span></span></label>
-                    {% endfor %}
+                        <div class="table-label">{% trans "Evening" %}</div>
+                        {% for _ in "1234567" %}
+                            <label class="table-cell"><input type="checkbox" name="evening_{{ forloop.counter }}"><span></span></label>
+                        {% endfor %}
 
-                    <div class="table-label">{% trans "Night" %}</div>
-                    {% for _ in "1234567" %}
-                        <label class="table-cell"><input type="checkbox"><span></span></label>
-                    {% endfor %}
-                </div>
+                        <div class="table-label">{% trans "Night" %}</div>
+                        {% for _ in "1234567" %}
+                            <label class="table-cell"><input type="checkbox" name="night_{{ forloop.counter }}"><span></span></label>
+                        {% endfor %}
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        {% component "button" label=save_label type="submit" / %}
+                    </div>
+                </form>
             {% endcomponent %}
         {% endcomponent %}
     {% endfill %}

@@ -24,3 +24,14 @@
     border: 1px solid var(--line);
     color: var(--text-strong);
 }
+
+.button--success {
+    background: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+.button--success:hover {
+    background: #218838;
+    border-color: #218838;
+}

@@ -1,29 +1,35 @@
 {% load i18n %}
-<article class="posting-card">
-    <header>
-        <small>{{ posting.kind }}</small>
-        <strong>{{ posting.budget }}</strong>
-    </header>
+<article class="posting-card{% if posting.status == 'completed' %} posting-card--completed{% endif %}">
+    <a href="{% url 'posting_detail' posting.slug %}" class="posting-card__link" aria-label="{{ posting.title }}">
+        <header>
+            <small>{{ posting.get_kind_display }}</small>
+            <strong>{{ posting.budget }}</strong>
+        </header>
 
-    <h2>{{ posting.title }}</h2>
-    <p>{{ posting.summary }}</p>
+        <h2>{{ posting.title }}</h2>
+        <p>{{ posting.summary }}</p>
 
-    <dl>
-        <div>
-            <dt>{% trans "Area" %}</dt>
-            <dd>{{ posting.location }}</dd>
-        </div>
-        <div>
-            <dt>{% trans "When" %}</dt>
-            <dd>{{ posting.window }}</dd>
-        </div>
-    </dl>
+        <dl>
+            <div>
+                <dt>{% trans "Area" %}</dt>
+                <dd>{{ posting.location }}</dd>
+            </div>
+            <div>
+                <dt>{% trans "When" %}</dt>
+                <dd>{{ posting.window }}</dd>
+            </div>
+        </dl>
 
+        {% if posting.status == "completed" %}
+            <span class="posting-card__status">{% trans "Completed" %} ✓</span>
+        {% endif %}
+    </a>
+    
     <footer>
         <section>
-            <a href="{% url 'account_detail' posting.account.slug %}">{{ posting.account.name }}</a>
+            <a href="{% url 'account_detail' posting.account.slug %}">{{ posting.account.user.get_full_name }}</a>
             <p>{{ posting.account.badge }} · {{ posting.account.area }}</p>
+            {% component "rating_badge" rating=posting.account.average_rating count=posting.account.rating_count / %}
         </section>
-        <a href="{% url 'posting_detail' posting.slug %}">{% trans "Open details" %}</a>
     </footer>
 </article>

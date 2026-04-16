@@ -1,13 +1,12 @@
 .posting-card {
     min-height: 280px;
-    padding: 1.25rem;
     display: grid;
-    gap: 0.9rem;
     align-content: start;
     border: 1px solid var(--line);
     background: var(--panel);
     box-shadow: 0 18px 40px var(--shadow);
     border-radius: 1.5rem;
+    overflow: hidden;
     transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -16,14 +15,28 @@
     box-shadow: 0 18px 34px var(--shadow);
 }
 
-.posting-card header {
+/* Clickable area covers the card body */
+.posting-card__link {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.posting-card__link:hover {
+    text-decoration: none;
+}
+
+.posting-card__link header {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     align-items: start;
 }
 
-.posting-card header small {
+.posting-card__link header small {
     display: block;
     color: var(--accent);
     font-weight: 800;
@@ -32,7 +45,7 @@
     font-size: 0.82rem;
 }
 
-.posting-card header strong {
+.posting-card__link header strong {
     font-weight: 800;
     color: var(--text-strong);
 }
@@ -74,18 +87,20 @@
     font-weight: 800;
 }
 
+/* Footer stays outside the clickable area */
 .posting-card footer {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     align-items: start;
+    padding: 0 1.25rem 1.25rem;
 }
 
 .posting-card footer section {
     display: grid;
 }
 
-.posting-card footer a:first-child {
+.posting-card footer a {
     color: var(--accent);
     font-weight: 800;
     text-decoration: none;
@@ -97,10 +112,34 @@
     font-size: 0.9rem;
 }
 
-.posting-card footer a:last-child {
-    align-self: end;
-    color: var(--accent);
+/* Completed status badge */
+.posting-card__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.9rem;
+    width: fit-content;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #a3d9b1;
+    border-radius: 2rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    text-decoration: none;
-    text-shadow: var(--text-shadow);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+[data-theme="night"] .posting-card__status {
+    background: #1a3a2a;
+    color: #78e0a0;
+    border-color: #2d6b45;
+}
+
+/* Completed card muted style */
+.posting-card--completed {
+    opacity: 0.7;
+}
+
+.posting-card--completed:hover {
+    opacity: 1;
 }

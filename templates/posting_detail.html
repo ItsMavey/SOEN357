@@ -8,6 +8,8 @@
 {% trans "View account" as view_account_label %}
 {% trans "Details" as details_title %}
 {% trans "Areas included" as areas_title %}
+{% trans "Work proof" as proof_title %}
+{% trans "Before-and-after photos submitted by workers." as proof_support %}
 
 {% component "shell" layout="content" %}
     {% fill "sidebar" %}
@@ -17,7 +19,16 @@
 
     {% fill "default" %}
         {% component "surface" kind="panel" %}
-            {% component "heading" eyebrow=posting.kind title=posting.title support=posting.summary level=1 / %}
+            {% component "heading" eyebrow=posting.get_kind_display title=posting.title support=posting.summary level=1 / %}
+
+            {# ── Status badge ─────────────────────────────── #}
+            {% if posting.status == "completed" %}
+                <div class="posting-detail__status posting-detail__status--completed">{% trans "Completed" %} ✓</div>
+            {% elif posting.status == "in_progress" %}
+                <div class="posting-detail__status posting-detail__status--progress">{% trans "In progress" %}</div>
+            {% else %}
+                <div class="posting-detail__status posting-detail__status--open">{% trans "Open" %}</div>
+            {% endif %}
 
             {% component "fact_grid" variant="detail" %}
                 <div>
@@ -34,7 +45,11 @@
                 </div>
                 <div>
                     <dt>{% trans "Posted by" %}</dt>
-                    <dd><a href="{% url 'account_detail' posting.account.slug %}" style="color: var(--accent); font-weight: 800; text-decoration: underline;">{{ posting.account.name }}</a></dd>
+                    <dd><a href="{% url 'account_detail' posting.account.slug %}" style="color: var(--accent); font-weight: 800; text-decoration: underline;">{{ posting.account.user.get_full_name }}</a></dd>
+                </div>
+                <div>
+                    <dt>{% trans "Rating" %}</dt>
+                    <dd>{% component "rating_badge" rating=posting.account.average_rating count=posting.account.rating_count size="large" / %}</dd>
                 </div>
             {% endcomponent %}
 
@@ -49,7 +64,47 @@
                     {% component "tag_list" tags=posting.areas / %}
                 </div>
             {% endcomponent %}
+
+            {# ── Mark as completed button ──────────────────── #}
+            {% if posting.status != "completed" and request.user.is_authenticated %}
+                <form method="post" action="{% url 'mark_completed' posting.slug %}" style="margin-top: 1.5rem;">
+                    {% csrf_token %}
+                    {% component "button" label="Mark as completed ✓" type="submit" tone="success" / %}
+                </form>
+            {% endif %}
         {% endcomponent %}
+
+        {# ── Work proofs section ─────────────────────────── #}
+        {% if work_proofs or can_upload_proof %}
+        {% component "surface" kind="panel" %}
+            {% component "heading" title=proof_title support=proof_support / %}
+
+            {% component "stack" %}
+                {% for proof in work_proofs %}
+                    {% component "work_proof" proof=proof / %}
+                {% empty %}
+                    <p style="color: var(--text-soft); font-weight: 600;">{% trans "No proof photos uploaded yet." %}</p>
+                {% endfor %}
+            {% endcomponent %}
+
+            {% if can_upload_proof and request.user.is_authenticated %}
+            <form method="post" action="{% url 'upload_work_proof' posting.slug %}" enctype="multipart/form-data" style="margin-top: 1.5rem;">
+                {% csrf_token %}
+                {% component "heading" title="Upload your proof" compact=True / %}
+                <div class="stack" style="--stack-gap: 1rem; margin-top: 0.75rem;">
+                    {% component "form_group" title="Before photo" %}
+                        {% component "upload_field" label="Choose before photo" name="photo_before" / %}
+                    {% endcomponent %}
+                    {% component "form_group" title="After photo" %}
+                        {% component "upload_field" label="Choose after photo" name="photo_after" / %}
+                    {% endcomponent %}
+                    {% component "text_field" label="Caption (optional)" name="caption" placeholder="Short note about the work done" / %}
+                    {% component "button" label="Submit proof" type="submit" / %}
+                </div>
+            </form>
+            {% endif %}
+        {% endcomponent %}
+        {% endif %}
     {% endfill %}
 {% endcomponent %}
 {% endblock %}

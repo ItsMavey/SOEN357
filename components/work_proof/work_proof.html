@@ -1,0 +1,77 @@
+{% load i18n %}
+<figure class="work-proof" data-work-proof>
+    <div class="work-proof__images">
+        <div class="work-proof__side">
+            <span class="work-proof__label work-proof__label--before">{% trans "Before" %}</span>
+            <img src="{{ proof.photo_before.url }}" alt="{% trans 'Before work' %}" loading="lazy">
+            {% if exif_before and exif_before.datetime_original %}
+                <span class="work-proof__exif-badge">📷 {{ exif_before.datetime_original|date:"M d, Y H:i" }}</span>
+            {% endif %}
+        </div>
+        <div class="work-proof__divider" aria-hidden="true">
+            <span class="work-proof__arrow">→</span>
+        </div>
+        <div class="work-proof__side">
+            <span class="work-proof__label work-proof__label--after">{% trans "After" %}</span>
+            <img src="{{ proof.photo_after.url }}" alt="{% trans 'After work' %}" loading="lazy">
+            {% if exif_after and exif_after.datetime_original %}
+                <span class="work-proof__exif-badge">📷 {{ exif_after.datetime_original|date:"M d, Y H:i" }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <figcaption class="work-proof__footer">
+        <div class="work-proof__meta">
+            <strong>{{ proof.worker.user.get_full_name }}</strong>
+            <span>{{ proof.created_at|date:"M d, Y" }}</span>
+        </div>
+        {% if proof.caption %}
+            <p class="work-proof__caption">{{ proof.caption }}</p>
+        {% endif %}
+
+        {# ── EXIF metadata strip ─────────────────────────── #}
+        {% if exif_before.camera_model or exif_after.camera_model or exif_before.latitude or exif_after.latitude %}
+        <div class="work-proof__exif-strip">
+            <span class="work-proof__exif-title">{% trans "EXIF data" %}</span>
+            <div class="work-proof__exif-grid">
+                {% if exif_before.camera_make or exif_before.camera_model %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "Before camera" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_before.camera_make }} {{ exif_before.camera_model }}</span>
+                </div>
+                {% endif %}
+                {% if exif_after.camera_make or exif_after.camera_model %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "After camera" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_after.camera_make }} {{ exif_after.camera_model }}</span>
+                </div>
+                {% endif %}
+                {% if exif_before.latitude and exif_before.longitude %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "Before GPS" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_before.latitude }}, {{ exif_before.longitude }}</span>
+                </div>
+                {% endif %}
+                {% if exif_after.latitude and exif_after.longitude %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "After GPS" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_after.latitude }}, {{ exif_after.longitude }}</span>
+                </div>
+                {% endif %}
+                {% if exif_before.image_width and exif_before.image_height %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "Before size" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_before.image_width }}×{{ exif_before.image_height }}</span>
+                </div>
+                {% endif %}
+                {% if exif_after.image_width and exif_after.image_height %}
+                <div class="work-proof__exif-item">
+                    <span class="work-proof__exif-label">{% trans "After size" %}</span>
+                    <span class="work-proof__exif-value">{{ exif_after.image_width }}×{{ exif_after.image_height }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </figcaption>
+</figure>

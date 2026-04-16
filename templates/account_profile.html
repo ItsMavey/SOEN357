@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% load i18n %}
 
-{% block title %}{{ account.name }} | Bing Chilling{% endblock %}
+{% block title %}{{ account.user.get_full_name }} | Bing Chilling{% endblock %}
 
 {% block content %}
 {% trans "Back to postings" as back_label %}
@@ -18,8 +18,11 @@
     {% fill "default" %}
         {% component "stack" %}
             {% component "surface" kind="panel" %}
-                {% component "heading" eyebrow=account.role title=account.name support=account.badge|add:" · "|add:account.area level=1 / %}
+                {% component "heading" eyebrow=account.get_role_display title=account.user.get_full_name support=account.badge|add:" · "|add:account.area level=1 / %}
                 <p>{{ account.summary }}</p>
+                <div style="margin-top: 0.75rem;">
+                    {% component "rating_badge" rating=account.average_rating count=account.rating_count size="large" / %}
+                </div>
             {% endcomponent %}
 
             {% component "surface" kind="panel" %}

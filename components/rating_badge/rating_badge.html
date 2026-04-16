@@ -1,0 +1,30 @@
+{% load i18n %}
+{% if rating is not None %}
+<span class="rating-badge{% if size == 'large' %} rating-badge--large{% endif %}" aria-label="{% blocktrans with score=rating total=count %}{{ score }} out of 5 from {{ total }} reviews{% endblocktrans %}">
+    <span class="rating-badge__stars" aria-hidden="true">
+        {% for star in stars %}
+            {% if star == "full" %}
+                <svg viewBox="0 0 20 20"><path d="M10 1.12l2.76 5.58 6.16.9-4.46 4.34 1.05 6.14L10 15.27l-5.51 2.81 1.05-6.14L1.08 7.6l6.16-.9L10 1.12z"/></svg>
+            {% elif star == "half" %}
+                <svg viewBox="0 0 20 20" class="rating-badge__star--half">
+                    <defs>
+                        <linearGradient id="halfGrad">
+                            <stop offset="50%" stop-color="currentColor"/>
+                            <stop offset="50%" stop-color="transparent"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M10 1.12l2.76 5.58 6.16.9-4.46 4.34 1.05 6.14L10 15.27l-5.51 2.81 1.05-6.14L1.08 7.6l6.16-.9L10 1.12z" fill="url(#halfGrad)" stroke="currentColor" stroke-width="1"/>
+                </svg>
+            {% else %}
+                <svg viewBox="0 0 20 20" class="rating-badge__star--empty"><path d="M10 1.12l2.76 5.58 6.16.9-4.46 4.34 1.05 6.14L10 15.27l-5.51 2.81 1.05-6.14L1.08 7.6l6.16-.9L10 1.12z"/></svg>
+            {% endif %}
+        {% endfor %}
+    </span>
+    <strong class="rating-badge__score">{{ rating }}</strong>
+    <span class="rating-badge__count">({{ count }})</span>
+</span>
+{% else %}
+<span class="rating-badge rating-badge--empty">
+    <span class="rating-badge__label">{% trans "No ratings yet" %}</span>
+</span>
+{% endif %}

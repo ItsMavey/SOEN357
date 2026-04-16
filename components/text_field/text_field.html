@@ -3,6 +3,7 @@
     <input type="{{ type }}" {% if name %}name="{{ name }}"{% endif %} 
            {% if placeholder %}placeholder="{{ placeholder }}"{% endif %} 
            {% if value %}value="{{ value }}"{% endif %} 
+           {% if required %}required{% endif %}
            class="text-field__input"
            {% for key, val in attrs.items %}data-{{ key }}="{{ val }}" {% if key == 'id' %}id="{{ val }}"{% endif %}{% endfor %}>
 </label>

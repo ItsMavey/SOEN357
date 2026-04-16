@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soen357-web
+  namespace: soen357
+  labels:
+    app: soen357
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soen357
+  template:
+    metadata:
+      labels:
+        app: soen357
+    spec:
+      containers:
+        - name: web
+          image: localhost/soen357:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: DB_DIR
+              value: "/app/data"
+            - name: ALLOWED_HOSTS
+              value: "*"
+          volumeMounts:
+            - name: db-storage
+              mountPath: /app/data
+            - name: media-storage
+              mountPath: /app/media
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: soen357-db
+        - name: media-storage
+          persistentVolumeClaim:
+            claimName: soen357-media
